@@ -1,3 +1,6 @@
+# TODO:
+# - build packages from separate specs where possible
+# - use optflags where missing
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
@@ -30,9 +33,8 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel
-Provides:	nx-X11
 Requires:	XFree86
-
+Provides:	nx-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -45,61 +47,47 @@ NoMachine NX to schemat kompresji dla X nowej generacji. Dziala na
 zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 
 %prep
-%setup -q -T -n nxcomp -b0 -b1 -b2 -b3 -b4 -b5 -b6 -b7
+%setup -q -c -a1 -a2 -a3 -a4 -a5 -a6 -a7
 
 %build
-cd $RPM_BUILD_DIR
 cd nxcomp
 %configure
 %{__make}
-cd ..
-cd nxproxy
+cd ../nxproxy
 %configure
 %{__make}
-cd ..
-cd nx-X11
+cd ../nx-X11
 %{__make} World
-cd ..
-cd nxcompext
+cd ../nxcompext
 %configure
 %{__make}
-cd ..
-cd nxviewer
+cd ../nxviewer
 xmkmf -a
-cp -a /usr/X11R6/lib/libXp.so* ../nx-X11/exports/lib
+cp -a /usr/X11R6/%{_lib}/libXp.so* ../nx-X11/exports/lib
 %{__make}
 %{__make} install DESTDIR=../
-cd ..
-cd nxdesktop
-./configure --prefix=/usr --sharedir=%{_libdir}/NX
+cd ../nxdesktop
+./configure \
+	--prefix=/usr \
+	--sharedir=%{_libdir}/NX
 %{__make}
-cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-pwd
-cd $RPM_BUILD_DIR
-install -d $RPM_BUILD_ROOT/%{_libdir}/NX/lib
-install -d $RPM_BUILD_ROOT/%{_bindir}
+install -d $RPM_BUILD_ROOT{%{_libdir}/NX/lib,%{_bindir}}
+
 cp -a nx-X11/lib/X11/libX11.so* \
 	nx-X11/lib/Xext/libXext.so* \
 	nx-X11/lib/Xrender/libXrender.so.* \
 	nxcomp/libXcomp.so.* \
 	nxcompext/libXcompext.so* \
-	$RPM_BUILD_ROOT/%{_libdir}/NX/lib
+	$RPM_BUILD_ROOT%{_libdir}/NX/lib
 cp -a nxproxy/nxproxy \
 	nxviewer/nxviewer/nxviewer \
 	nxviewer/nxpasswd/nxpasswd \
 	nxdesktop/nxdesktop \
 	nx-X11/programs/Xserver/nxagent \
-	$RPM_BUILD_ROOT/%{_bindir}
-chmod 755 $RPM_BUILD_ROOT/%{_bindir}/nxagent \
-	$RPM_BUILD_ROOT/%{_bindir}/nxproxy \
-	$RPM_BUILD_ROOT/%{_bindir}/nxviewer \
-	$RPM_BUILD_ROOT/%{_bindir}/nxpasswd \
-	$RPM_BUILD_ROOT/%{_bindir}/nxdesktop \
-	$RPM_BUILD_ROOT/%{_bindir}/nxviewer
-
+	$RPM_BUILD_ROOT%{_bindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -121,5 +109,6 @@ fi
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
-%{_libdir}/NX
+%dir %{_libdir}/NX
+%dir %{_libdir}/NX/lib
 %attr(755,root,root) %{_libdir}/NX/lib/*
