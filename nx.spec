@@ -1,5 +1,5 @@
-Summary:	NoMachine NX is the next-generation X compression scheme.
-Summary(pl):	NoMachine NX to schemat kompresji nowej generacji dla X.
+Summary:	NoMachine NX is the next-generation X compression scheme
+Summary(pl):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	1.4.0
 Release:	0.1
@@ -42,7 +42,7 @@ dialup links or anything better.
 
 %description -l pl
 NoMachine NX to schemat kompresji dla X nowej generacji. Dziala na
-zdalnych sesjach X11 nawet przy predkosci 56k albo szybszej.
+zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 
 %prep
 %setup -q -T -n nxcomp -b0 -b1 -b2 -b3 -b4 -b5 -b6 -b7
@@ -82,23 +82,23 @@ cd $RPM_BUILD_DIR
 install -d $RPM_BUILD_ROOT/%{_libdir}/NX/lib
 install -d $RPM_BUILD_ROOT/%{_bindir}
 cp -a nx-X11/lib/X11/libX11.so* \
-    nx-X11/lib/Xext/libXext.so* \
-    nx-X11/lib/Xrender/libXrender.so.* \
-    nxcomp/libXcomp.so.* \
-    nxcompext/libXcompext.so* \
-    $RPM_BUILD_ROOT/%{_libdir}/NX/lib
+	nx-X11/lib/Xext/libXext.so* \
+	nx-X11/lib/Xrender/libXrender.so.* \
+	nxcomp/libXcomp.so.* \
+	nxcompext/libXcompext.so* \
+	$RPM_BUILD_ROOT/%{_libdir}/NX/lib
 cp -a nxproxy/nxproxy \
-    nxviewer/nxviewer/nxviewer \
-    nxviewer/nxpasswd/nxpasswd \
-    nxdesktop/nxdesktop \
-    nx-X11/programs/Xserver/nxagent \
-    $RPM_BUILD_ROOT/%{_bindir}
+	nxviewer/nxviewer/nxviewer \
+	nxviewer/nxpasswd/nxpasswd \
+	nxdesktop/nxdesktop \
+	nx-X11/programs/Xserver/nxagent \
+	$RPM_BUILD_ROOT/%{_bindir}
 chmod 755 $RPM_BUILD_ROOT/%{_bindir}/nxagent \
-    $RPM_BUILD_ROOT/%{_bindir}/nxproxy \
-    $RPM_BUILD_ROOT/%{_bindir}/nxviewer \
-    $RPM_BUILD_ROOT/%{_bindir}/nxpasswd \
-    $RPM_BUILD_ROOT/%{_bindir}/nxdesktop \
-    $RPM_BUILD_ROOT/%{_bindir}/nxviewer
+	$RPM_BUILD_ROOT/%{_bindir}/nxproxy \
+	$RPM_BUILD_ROOT/%{_bindir}/nxviewer \
+	$RPM_BUILD_ROOT/%{_bindir}/nxpasswd \
+	$RPM_BUILD_ROOT/%{_bindir}/nxdesktop \
+	$RPM_BUILD_ROOT/%{_bindir}/nxviewer
 
 
 %clean
@@ -112,9 +112,9 @@ grep -qs "^%{_libdir}/NX/lib$" /etc/ld.so.conf
 
 %postun
 if [ "$1" = "0" ]; then
-    umask 022
-    grep -v "%{_libdir}/NX/lib" /etc/ld.so.conf > /etc/ld.so.conf.new
-    mv -f /etc/ld.so.conf.new /etc/ld.so.conf
+	umask 022
+	grep -v "%{_libdir}/NX/lib" /etc/ld.so.conf > /etc/ld.so.conf.new
+	mv -f /etc/ld.so.conf.new /etc/ld.so.conf
 fi
 /sbin/ldconfig
 
