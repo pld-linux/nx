@@ -43,7 +43,7 @@ suppression scheme. It can operate remote X11 sessions over 56k modem
 dialup links or anything better.
 
 %description -l pl
-NoMachine NX to schemat kompresji dla X nowej generacji. Dziala na
+NoMachine NX to schemat kompresji dla X nowej generacji. Dzia³a na
 zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 
 %prep
