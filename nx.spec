@@ -1,30 +1,41 @@
 # TODO:
 # - build packages from separate specs where possible
 # - use optflags where missing
+%define	_agent_minor	90
+%define	_auth_minor	1
+%define	_compext_minor	16
+%define	_comp_minor	65
+%define	_desktop_minor	61
+%define	_viewer_minor	14
+%define	_proxy_minor	9
+%define	_X11_minor	15
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
-Version:	1.4.0
+Version:	1.5.0
 Release:	0.1
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
-Source0:	http://www.nomachine.com/download/nxsources/nxproxy/%{name}proxy-%{version}-2.tar.gz
-#Source0-md5:	15d89810730c7ed0e669b5525e5f3620
-Source1:	http://www.nomachine.com/download/nxsources/nxcomp/%{name}comp-%{version}-29.tar.gz
-#Source1-md5:	cf17be978269ff0fc69de94c633ec5b2
-Source2:	http://www.nomachine.com/download/nxsources/nxcompext/%{name}compext-%{version}-3.tar.gz
-#Source2-md5:	ab12f1f32329f5da0f53dd0969fe897e
-Source3:	http://www.nomachine.com/download/nxsources/nx-X11/%{name}-X11-%{version}-6.tar.gz
-#Source3-md5:	3ac35266d47e3bb98506c851fa0c7959
-Source4:	http://www.nomachine.com/download/nxsources/nxagent/%{name}agent-%{version}-63.tar.gz
-#Source4-md5:	a325d4e325d950a65f0bee515f7c9f18
-Source5:	http://www.nomachine.com/download/nxsources/nxauth/%{name}auth-%{version}-1.tar.gz
-#Source5-md5:	ea3b8b2b1b31c8cb33b47821ee1958a3
-Source6:	http://www.nomachine.com/download/nxsources/nxviewer/%{name}viewer-%{version}-4.tar.gz
-#Source6-md5:	629f90c1f8ef50517e8b1de2c30adcb4
-Source7:	http://www.nomachine.com/download/nxsources/nxdesktop/%{name}desktop-%{version}-57.tar.gz
-#Source7-md5:	0d2571d70c7ed39ad566d8d3daecfd22
+Source0:	http://www.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
+# Source0-md5:	920b4debd9006b759c2dc7fa49827b9d
+Source1:	http://www.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
+# Source1-md5:	b4565a78114114dae6f7be46b6a4f3da
+Source2:	http://www.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
+# Source2-md5:	a7c5e68e9678cb5c722c334b33baf660
+Source3:	http://www.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{_compext_minor}.tar.gz
+# Source3-md5:	8608a76bb9852c9bea8aedeba5cd1158
+Source4:	http://www.nomachine.com/download/%{version}/sources/%{name}desktop-%{version}-%{_desktop_minor}.tar.gz
+# Source4-md5:	b5a9e3769890af7150ffec13689e1e83
+Source5:	http://www.nomachine.com/download/%{version}/sources/%{name}viewer-%{version}-%{_viewer_minor}.tar.gz
+# Source5-md5:	8d2246c016e8ac01b6c539cad792cd27
+Source6:	http://www.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{_comp_minor}.tar.gz
+# Source6-md5:	cab094a88acb299cc1e89dfb2c6a95eb
+Source7:	http://www.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
+# Source7-md5:	d2e3c1a109db336dfa497f4c2004f2d5
+Patch0:		%{name}-X11-libs.patch
+Patch1:		%{name}compext-libs.patch
+Patch2:		%{name}viewer.patch
 URL:		http://www.nomachine.com/
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
@@ -48,67 +59,82 @@ zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 
 %prep
 %setup -q -c -a1 -a2 -a3 -a4 -a5 -a6 -a7
+%patch0
+%patch1
+%patch2
 
 %build
+export CFLAGS="%{rpmcflags} -fPIC"
+export CXXFLAGS="%{rpmcflags} -fPIC"
+export CPPFLAGS="%{rpmcflags} -fPIC"
+
 cd nxcomp
 %configure
 %{__make}
-cd ../nxproxy
-%configure
-%{__make}
-cd ../nx-X11
-%{__make} World
+
 cd ../nxcompext
 %configure
+perl -pi -e "s|LDFLAGS     = |LDFLAGS = -fPIC -L/usr/X11R6/%{_lib}|" Makefile
 %{__make}
-cd ../nxviewer
-xmkmf -a
-cp -a /usr/X11R6/%{_lib}/libXp.so* ../nx-X11/exports/lib
-%{__make}
-%{__make} install DESTDIR=../
+
+cd ../nx-X11
+%{__make} World
+
 cd ../nxdesktop
 ./configure \
-	--prefix=/usr \
-	--sharedir=%{_libdir}/NX
+	--prefix=%{_prefix} \
+	--exec-prefix=%{_prefix}
+perl -pi -e "s|/usr/NX|%{_prefix}|" Makefile
+perl -pi -e "s|-lX11|-lX11-nx|" Makefile
+perl -pi -e "s|-lXext|-lXext -L/usr/X11R6/%{_lib}|" Makefile
+%{__make}
+
+cd ../nxviewer
+xmkmf -a
+%{__make} World
+
+cd ../nxproxy
+%configure
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir}/NX/lib,%{_bindir}}
+install -d $RPM_BUILD_ROOT{%{_libdir}/pkgconfig,%{_bindir},%{_includedir}/nxcompsh}
 
-cp -a nx-X11/lib/X11/libX11.so* \
-	nx-X11/lib/Xext/libXext.so* \
-	nx-X11/lib/Xrender/libXrender.so.* \
-	nxcomp/libXcomp.so.* \
-	nxcompext/libXcompext.so* \
-	$RPM_BUILD_ROOT%{_libdir}/NX/lib
-cp -a nxproxy/nxproxy \
-	nxviewer/nxviewer/nxviewer \
-	nxviewer/nxpasswd/nxpasswd \
-	nxdesktop/nxdesktop \
-	nx-X11/programs/Xserver/nxagent \
-	$RPM_BUILD_ROOT%{_bindir}
+# comp
+install nxcomp/libXcomp.so.* $RPM_BUILD_ROOT%{_libdir}
+rm -f $RPM_BUILD_ROOT%{_libdir}/libXcomp.so.1
+
+# X11
+install nx-X11/lib/X11/libX11-nx.so.* \
+	nx-X11/lib/Xext/libXext-nx.so.* \
+	nx-X11/lib/Xrender/libXrender-nx.so.* \
+	$RPM_BUILD_ROOT%{_libdir}
+install nx-X11/programs/Xserver/nxagent $RPM_BUILD_ROOT%{_bindir}
+rm -f $RPM_BUILD_ROOT%{_libdir}/libX{11-nx.so.6,ext-nx.so.6,render-nx.so.1}
+
+# desktop
+install nxdesktop/nxdesktop $RPM_BUILD_ROOT%{_bindir}
+
+# compext
+install nxcompext/libXcompext.so.* $RPM_BUILD_ROOT%{_libdir}
+rm -f $RPM_BUILD_ROOT%{_libdir}/libXcompext.so.1
+
+# viewer
+install nxviewer/nxviewer/nxviewer $RPM_BUILD_ROOT%{_bindir}
+install nxviewer/nxpasswd/nxpasswd $RPM_BUILD_ROOT%{_bindir}
+
+# proxy
+install nxproxy/nxproxy $RPM_BUILD_ROOT%{_bindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
-umask 022
-grep -qs "^%{_libdir}/NX/lib$" /etc/ld.so.conf
-[ $? -ne 0 ] && echo "%{_libdir}/NX/lib" >> /etc/ld.so.conf
-/sbin/ldconfig
+%post -p /sbin/ldconfig
 
-%postun
-if [ "$1" = "0" ]; then
-	umask 022
-	grep -v "%{_libdir}/NX/lib" /etc/ld.so.conf > /etc/ld.so.conf.new
-	mv -f /etc/ld.so.conf.new /etc/ld.so.conf
-fi
-/sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
-%dir %{_libdir}/NX
-%dir %{_libdir}/NX/lib
-%attr(755,root,root) %{_libdir}/NX/lib/*
+%attr(755,root,root) %{_libdir}/*.so.*
