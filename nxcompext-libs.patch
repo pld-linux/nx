@@ -1,0 +1,12 @@
+diff -Nru /home/couriousous/nx-1.5/nxcompext/Makefile.in nxcompext/Makefile.in
+--- /home/couriousous/nx-1.5/nxcompext/Makefile.in	2005-06-04 00:04:50.000000000 +0200
++++ nxcompext/Makefile.in	2005-07-09 15:27:26.730604443 +0200
+@@ -24,7 +24,7 @@
+               -I../nx-X11/include -I../nx-X11/programs/Xserver/include 
+ CCDEFINES   =
+ 
+-LDFLAGS     = @LDFLAGS@ -L../nx-X11/lib/X11 -L../nxcomp
++LDFLAGS     = @LDFLAGS@ -L/usr/X11R6/lib -L../nxcomp
+ LIBS        = @LIBS@ -lz -lX11 -lXcomp
+ 
+ #
