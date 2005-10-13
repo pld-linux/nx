@@ -1,11 +1,11 @@
 # TODO:
 # - build packages from separate specs where possible
 # - use optflags where missing
-%define	_agent_minor	90
+%define	_agent_minor	93
 %define	_auth_minor	1
 %define	_compext_minor	16
 %define	_comp_minor	65
-%define	_desktop_minor	61
+%define	_desktop_minor	75
 %define	_viewer_minor	14
 %define	_proxy_minor	9
 %define	_X11_minor	15
@@ -17,21 +17,21 @@ Release:	0.1
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
-Source0:	http://www.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
+Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
 # Source0-md5:	920b4debd9006b759c2dc7fa49827b9d
-Source1:	http://www.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
-# Source1-md5:	b4565a78114114dae6f7be46b6a4f3da
-Source2:	http://www.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
+Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
+# Source1-md5:	5fbc1bec79c1f7b175f9c3d22c7a4b4b
+Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
 # Source2-md5:	a7c5e68e9678cb5c722c334b33baf660
-Source3:	http://www.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{_compext_minor}.tar.gz
+Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{_compext_minor}.tar.gz
 # Source3-md5:	8608a76bb9852c9bea8aedeba5cd1158
-Source4:	http://www.nomachine.com/download/%{version}/sources/%{name}desktop-%{version}-%{_desktop_minor}.tar.gz
-# Source4-md5:	b5a9e3769890af7150ffec13689e1e83
-Source5:	http://www.nomachine.com/download/%{version}/sources/%{name}viewer-%{version}-%{_viewer_minor}.tar.gz
+Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}desktop-%{version}-%{_desktop_minor}.tar.gz
+# Source4-md5:	cf26ce98b879bcd7eae8ad26d32d079a
+Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}viewer-%{version}-%{_viewer_minor}.tar.gz
 # Source5-md5:	8d2246c016e8ac01b6c539cad792cd27
-Source6:	http://www.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{_comp_minor}.tar.gz
+Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{_comp_minor}.tar.gz
 # Source6-md5:	cab094a88acb299cc1e89dfb2c6a95eb
-Source7:	http://www.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
+Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
 # Source7-md5:	d2e3c1a109db336dfa497f4c2004f2d5
 Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
@@ -44,6 +44,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel
+BuildRequires:	which
 Requires:	XFree86
 Provides:	nx-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
