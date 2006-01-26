@@ -37,14 +37,15 @@ Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
 URL:		http://www.nomachine.com/
-BuildRequires:	Xaw3d-devel
 BuildRequires:	XFree86-devel
+BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel
+BuildRequires:	sed >= 4.0
 BuildRequires:	which
 Requires:	XFree86
 Provides:	nx-X11
@@ -77,7 +78,7 @@ cd nxcomp
 
 cd ../nxcompext
 %configure
-perl -pi -e "s|LDFLAGS     = |LDFLAGS = -fPIC -L/usr/X11R6/%{_lib}|" Makefile
+sed -i -e "s|LDFLAGS     = |LDFLAGS = -fPIC -L/usr/X11R6/%{_lib}|" Makefile
 %{__make} \
 	CC="%{__cc}"
 
@@ -90,9 +91,9 @@ cd ../nxdesktop
 ./configure \
 	--prefix=%{_prefix} \
 	--exec-prefix=%{_prefix}
-perl -pi -e "s|/usr/NX|%{_prefix}|" Makefile
-perl -pi -e "s|-lX11|-lX11-nx|" Makefile
-perl -pi -e "s|-lXext|-lXext -L/usr/X11R6/%{_lib}|" Makefile
+sed -i -e "s|/usr/NX|%{_prefix}|" Makefile
+sed -i -e "s|-lX11|-lX11-nx|" Makefile
+sed -i -e "s|-lXext|-lXext -L/usr/X11R6/%{_lib}|" Makefile
 %{__make}
 
 cd ../nxviewer
@@ -140,9 +141,8 @@ install nxproxy/nxproxy $RPM_BUILD_ROOT%{_bindir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
