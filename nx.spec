@@ -72,16 +72,18 @@ export CPPFLAGS="%{rpmcflags} -fPIC"
 
 cd nxcomp
 %configure
-%{__make}
+%{__make} \
+	CC="%{__cc}"
 
 cd ../nxcompext
 %configure
 perl -pi -e "s|LDFLAGS     = |LDFLAGS = -fPIC -L/usr/X11R6/%{_lib}|" Makefile
-%{__make}
+%{__make} \
+	CC="%{__cc}"
 
 cd ../nx-X11
 %{__make} \
-	CC="%{_cc}" \
+	CC="%{__cc}" \
 	World
 
 cd ../nxdesktop
@@ -97,13 +99,13 @@ cd ../nxviewer
 xmkmf -a
 %{__make} \
 	EXTRA_LIBRARIES="-L%{_libdir} -L../nx-X11/exports/lib" \
-	CC="%{_cc}" \
+	CC="%{__cc}" \
 	World
 
 cd ../nxproxy
 %configure
 %{__make} \
-	CC="%{_cc}"
+	CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
