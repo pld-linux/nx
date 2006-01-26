@@ -1,14 +1,14 @@
 # TODO:
 # - build packages from separate specs where possible
 # - use optflags where missing
-%define	_agent_minor	93
+%define	_agent_minor	112
 %define	_auth_minor	1
-%define	_compext_minor	16
-%define	_comp_minor	65
-%define	_desktop_minor	75
-%define	_viewer_minor	14
+%define	_compext_minor	20
+%define	_comp_minor	80
+%define	_desktop_minor	78
+%define	_viewer_minor	15
 %define	_proxy_minor	9
-%define	_X11_minor	15
+%define	_X11_minor	21
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
@@ -18,25 +18,26 @@ License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
 Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
-# Source0-md5:	920b4debd9006b759c2dc7fa49827b9d
+# Source0-md5:	11877c3357732a957e3bf7e3d2f2ca0a
 Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
-# Source1-md5:	5fbc1bec79c1f7b175f9c3d22c7a4b4b
+# Source1-md5:	160726ed67698a9694b707950c49e19e
 Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
 # Source2-md5:	a7c5e68e9678cb5c722c334b33baf660
 Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{_compext_minor}.tar.gz
-# Source3-md5:	8608a76bb9852c9bea8aedeba5cd1158
+# Source3-md5:	6a5b8b79b9e0cc81b88233b18c4f227f
 Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}desktop-%{version}-%{_desktop_minor}.tar.gz
-# Source4-md5:	cf26ce98b879bcd7eae8ad26d32d079a
+# Source4-md5:	6c20c1300ca6b4d362237ef44cfee7f7
 Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}viewer-%{version}-%{_viewer_minor}.tar.gz
-# Source5-md5:	8d2246c016e8ac01b6c539cad792cd27
+# Source5-md5:	ff3e5a4c1601b58f5fc405f990691bdf
 Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{_comp_minor}.tar.gz
-# Source6-md5:	cab094a88acb299cc1e89dfb2c6a95eb
+# Source6-md5:	782f04870142c9fc5b2e1f654fd0a5d7
 Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
 # Source7-md5:	d2e3c1a109db336dfa497f4c2004f2d5
 Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
 URL:		http://www.nomachine.com/
+BuildRequires:	Xaw3d-devel
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -61,7 +62,7 @@ zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 %prep
 %setup -q -c -a1 -a2 -a3 -a4 -a5 -a6 -a7
 %patch0
-%patch1
+#%patch1
 %patch2
 
 %build
@@ -79,7 +80,9 @@ perl -pi -e "s|LDFLAGS     = |LDFLAGS = -fPIC -L/usr/X11R6/%{_lib}|" Makefile
 %{__make}
 
 cd ../nx-X11
-%{__make} World
+%{__make} \
+	CC="%{_cc}" \
+	World
 
 cd ../nxdesktop
 ./configure \
@@ -92,11 +95,15 @@ perl -pi -e "s|-lXext|-lXext -L/usr/X11R6/%{_lib}|" Makefile
 
 cd ../nxviewer
 xmkmf -a
-%{__make} World
+%{__make} \
+	EXTRA_LIBRARIES="-L%{_libdir} -L../nx-X11/exports/lib" \
+	CC="%{_cc}" \
+	World
 
 cd ../nxproxy
 %configure
-%{__make}
+%{__make} \
+	CC="%{_cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
