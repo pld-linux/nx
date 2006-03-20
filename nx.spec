@@ -41,7 +41,6 @@ URL:		http://www.nomachine.com/
 BuildRequires:	xorg-cf-files
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXt-devel
-BuildRequires:	xorg-proto-xproto-devel
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
