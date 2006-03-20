@@ -38,9 +38,6 @@ Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
 Patch3:		%{name}-gcc-4.1.patch
 URL:		http://www.nomachine.com/
-BuildRequires:	xorg-cf-files
-BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	xorg-lib-libXt-devel
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -50,6 +47,10 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
+BuildRequires:	xorg-cf-files
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXt-devel
+BuildRequires:	xorg-util-imake
 Provides:	nx-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
