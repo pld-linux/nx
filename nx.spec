@@ -36,9 +36,13 @@ Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{v
 Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
+Patch3:		%{name}-gcc-4.1.patch
 URL:		http://www.nomachine.com/
-BuildRequires:	XFree86-devel
-BuildRequires:	Xaw3d-devel
+BuildRequires:	xorg-cf-files
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXt-devel
+BuildRequires:	xorg-proto-xproto-devel
+#BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
@@ -47,7 +51,6 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
-Requires:	XFree86
 Provides:	nx-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -65,6 +68,7 @@ zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 %patch0
 #%patch1
 %patch2
+%patch3 -p1
 
 %build
 export CFLAGS="%{rpmcflags} -fPIC"
@@ -78,9 +82,10 @@ cd nxcomp
 
 cd ../nxcompext
 %configure
-sed -i -e "s|LDFLAGS     = |LDFLAGS = -fPIC -L/usr/X11R6/%{_lib}|" Makefile
+sed -i -e "s|LDFLAGS     = |LDFLAGS = -fPIC |" Makefile
 %{__make} \
-	CC="%{__cc}"
+	CC="%{__cc}" \
+	MAKEDEPEND=/bin/true
 
 cd ../nx-X11
 %{__make} \
@@ -97,7 +102,9 @@ sed -i -e "s|-lXext|-lXext -L/usr/X11R6/%{_lib}|" Makefile
 %{__make}
 
 cd ../nxviewer
-xmkmf -a
+ln -s ../nx-X11/config config
+ln -s ../nx-X11/exports/ exports
+xmkmf -a .
 %{__make} \
 	EXTRA_LIBRARIES="-L%{_libdir} -L../nx-X11/exports/lib" \
 	CC="%{__cc}" \
