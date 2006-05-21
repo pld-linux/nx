@@ -13,7 +13,7 @@ Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	1.5.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
@@ -37,6 +37,7 @@ Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
 Patch3:		%{name}-gcc-4.1.patch
+Patch4:		%{name}-fonts.patch
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
@@ -69,6 +70,7 @@ zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 #%patch1
 %patch2
 %patch3 -p1
+%patch4 -p0
 
 %build
 export CFLAGS="%{rpmcflags} -fPIC"
