@@ -80,7 +80,8 @@ cd ../nxcompext
 %configure
 sed -i -e "s|LDFLAGS     = |LDFLAGS = -fPIC -L/usr/X11R6/%{_lib}|" Makefile
 %{__make} \
-	CC="%{__cc}"
+	CC="%{__cc}" \
+	MAKEDEPEND=/bin/true
 
 cd ../nx-X11
 %{__make} \
@@ -97,7 +98,9 @@ sed -i -e "s|-lXext|-lXext -L/usr/X11R6/%{_lib}|" Makefile
 %{__make}
 
 cd ../nxviewer
-xmkmf -a
+ln -s ../nx-X11/config config
+ln -s ../nx-X11/exports/ exports
+xmkmf -a .
 %{__make} \
 	EXTRA_LIBRARIES="-L%{_libdir} -L../nx-X11/exports/lib" \
 	CC="%{__cc}" \
