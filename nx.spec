@@ -106,7 +106,7 @@ ln -s ../nx-X11/config config
 ln -s ../nx-X11/exports/ exports
 xmkmf -a .
 %{__make} \
-	EXTRA_LIBRARIES="-L%{_libdir} -L../nx-X11/exports/lib" \
+	EXTRA_LIBRARIES="-L/usr/X11R6/%{_lib} -L../nx-X11/exports/lib" \
 	CC="%{__cc}" \
 	World
 
