@@ -36,6 +36,7 @@ Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{v
 Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
+Patch3:		%{name}-gcc-4.1.patch
 Patch4:		%{name}-fonts.patch
 URL:		http://www.nomachine.com/
 BuildRequires:	XFree86-devel
@@ -66,6 +67,7 @@ zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 %patch0
 #%patch1
 %patch2
+%patch3 -p1
 %patch4 -p0
 
 %build
