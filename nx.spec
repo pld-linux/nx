@@ -1,38 +1,38 @@
 # TODO:
 # - build packages from separate specs where possible
 # - use optflags where missing
-%define	_agent_minor	112
-%define	_auth_minor	1
-%define	_compext_minor	20
-%define	_comp_minor	80
-%define	_desktop_minor	78
-%define	_viewer_minor	15
-%define	_proxy_minor	9
-%define	_X11_minor	21
+%define	_agent_minor	85
+%define	_auth_minor	2
+%define	_compext_minor	33
+%define	_comp_minor	81
+%define	_desktop_minor	50
+%define	_viewer_minor	14
+%define	_proxy_minor	2
+%define	_X11_minor	31
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
-Version:	1.5.0
+Version:	2.0.0
 Release:	2
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
 Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
-# Source0-md5:	11877c3357732a957e3bf7e3d2f2ca0a
+# Source0-md5:	0c63cfdc37658eb74f4a84077b05fe9e
 Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
-# Source1-md5:	160726ed67698a9694b707950c49e19e
+# Source1-md5:	c78ce7a88d1cc8691d4997a69863c4c0
 Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
-# Source2-md5:	a7c5e68e9678cb5c722c334b33baf660
+# Source2-md5:	e55c5f3cc6f65c669cc02bf9a247263f
 Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{_compext_minor}.tar.gz
-# Source3-md5:	6a5b8b79b9e0cc81b88233b18c4f227f
+# Source3-md5:	d6738f330687d6c986600a9685e527cf
 Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}desktop-%{version}-%{_desktop_minor}.tar.gz
-# Source4-md5:	6c20c1300ca6b4d362237ef44cfee7f7
+# Source4-md5:	f55dc97544a061dfa0f099329dcc3f53
 Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}viewer-%{version}-%{_viewer_minor}.tar.gz
-# Source5-md5:	ff3e5a4c1601b58f5fc405f990691bdf
+# Source5-md5:	99da22474dc446ac536475e8d6e99278
 Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{_comp_minor}.tar.gz
-# Source6-md5:	782f04870142c9fc5b2e1f654fd0a5d7
+# Source6-md5:	fa6663ef31787d2a49982450928bf0cd
 Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
-# Source7-md5:	d2e3c1a109db336dfa497f4c2004f2d5
+# Source7-md5:	b078c19372c82e85667cbbac880fa688
 Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
@@ -64,9 +64,9 @@ zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
 
 %prep
 %setup -q -c -a1 -a2 -a3 -a4 -a5 -a6 -a7
-%patch0
+%patch0 -p1
 #%patch1
-%patch2
+%patch2 -p1
 %patch3 -p1
 %patch4 -p0
 
