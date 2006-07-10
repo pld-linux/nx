@@ -1,6 +1,6 @@
-diff -Nru /home/couriousous/nx-1.5/nx-X11/config/cf/Imake.cf nx-X11/config/cf/Imake.cf
---- /home/couriousous/nx-1.5/nx-X11/config/cf/Imake.cf	2003-02-18 17:51:46.000000000 +0100
-+++ nx-X11/config/cf/Imake.cf	2005-07-09 15:07:22.181305848 +0200
+diff -ur nx-2.0.0-o/nx-X11/config/cf/Imake.cf nx-2.0.0/nx-X11/config/cf/Imake.cf
+--- nx-2.0.0-o/nx-X11/config/cf/Imake.cf	2006-06-19 08:18:55.000000000 -0600
++++ nx-2.0.0/nx-X11/config/cf/Imake.cf	2006-07-09 22:27:28.000000000 -0600
 @@ -747,6 +747,13 @@
  #  define Mc68020Architecture
  #  undef mc68000
@@ -15,21 +15,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/config/cf/Imake.cf nx-X11/config/cf/Im
  # ifdef powerpc
  #  define PpcArchitecture
  #  undef powerpc
-diff -Nru /home/couriousous/nx-1.5/nx-X11/config/cf/X11.tmpl nx-X11/config/cf/X11.tmpl
---- /home/couriousous/nx-1.5/nx-X11/config/cf/X11.tmpl	2003-05-13 10:39:14.000000000 +0200
-+++ nx-X11/config/cf/X11.tmpl	2005-07-09 15:07:22.184305916 +0200
-@@ -469,7 +469,7 @@
- #endif
- #endif
- #ifndef BuildXprintLib
--#define BuildXprintLib		(BuildXprint && !BuildServersOnly)
-+#define BuildXprintLib		YES
- #endif
- #ifndef BuildScreenSaverExt
- #define BuildScreenSaverExt	NO
-diff -Nru /home/couriousous/nx-1.5/nx-X11/config/cf/linux.cf nx-X11/config/cf/linux.cf
---- /home/couriousous/nx-1.5/nx-X11/config/cf/linux.cf	2005-04-18 20:23:13.000000000 +0200
-+++ nx-X11/config/cf/linux.cf	2005-07-09 15:07:22.182305871 +0200
+diff -ur nx-2.0.0-o/nx-X11/config/cf/linux.cf nx-2.0.0/nx-X11/config/cf/linux.cf
+--- nx-2.0.0-o/nx-X11/config/cf/linux.cf	2006-06-19 08:18:55.000000000 -0600
++++ nx-2.0.0/nx-X11/config/cf/linux.cf	2006-07-09 22:27:28.000000000 -0600
 @@ -288,6 +288,8 @@
  #  elif defined(HPArchitecture)
  #    define BuildXF86DRI	NO
@@ -65,9 +53,21 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/config/cf/linux.cf nx-X11/config/cf/li
  #ifdef PpcArchitecture
  # define DefaultCCOptions	-fsigned-char
  # ifndef OptimizedCDebugFlags
-diff -Nru /home/couriousous/nx-1.5/nx-X11/config/cf/xfree86.cf nx-X11/config/cf/xfree86.cf
---- /home/couriousous/nx-1.5/nx-X11/config/cf/xfree86.cf	2003-02-26 21:08:00.000000000 +0100
-+++ nx-X11/config/cf/xfree86.cf	2005-07-09 15:07:22.186305961 +0200
+diff -ur nx-2.0.0-o/nx-X11/config/cf/X11.tmpl nx-2.0.0/nx-X11/config/cf/X11.tmpl
+--- nx-2.0.0-o/nx-X11/config/cf/X11.tmpl	2006-06-19 08:18:56.000000000 -0600
++++ nx-2.0.0/nx-X11/config/cf/X11.tmpl	2006-07-09 22:27:28.000000000 -0600
+@@ -469,7 +469,7 @@
+ #endif
+ #endif
+ #ifndef BuildXprintLib
+-#define BuildXprintLib		(BuildXprint && !BuildServersOnly)
++#define BuildXprintLib		YES
+ #endif
+ #ifndef BuildScreenSaverExt
+ #define BuildScreenSaverExt	NO
+diff -ur nx-2.0.0-o/nx-X11/config/cf/xfree86.cf nx-2.0.0/nx-X11/config/cf/xfree86.cf
+--- nx-2.0.0-o/nx-X11/config/cf/xfree86.cf	2006-06-19 08:18:56.000000000 -0600
++++ nx-2.0.0/nx-X11/config/cf/xfree86.cf	2006-07-09 22:27:28.000000000 -0600
 @@ -1099,6 +1099,99 @@
  # endif
  #endif
@@ -181,9 +181,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/config/cf/xfree86.cf nx-X11/config/cf/
  #if HasGcc2 && defined(PpcArchitecture)
  # ifndef DefaultGcc2PpcOpt
  #  define DefaultGcc2PpcOpt -O2 GccAliasingArgs
-diff -Nru /home/couriousous/nx-1.5/nx-X11/config/imake/imakemdep.h nx-X11/config/imake/imakemdep.h
---- /home/couriousous/nx-1.5/nx-X11/config/imake/imakemdep.h	2002-12-24 18:42:58.000000000 +0100
-+++ nx-X11/config/imake/imakemdep.h	2005-07-09 15:07:22.187305983 +0200
+diff -ur nx-2.0.0-o/nx-X11/config/imake/imakemdep.h nx-2.0.0/nx-X11/config/imake/imakemdep.h
+--- nx-2.0.0-o/nx-X11/config/imake/imakemdep.h	2002-12-24 10:42:58.000000000 -0700
++++ nx-2.0.0/nx-X11/config/imake/imakemdep.h	2006-07-09 22:27:28.000000000 -0600
 @@ -611,6 +611,9 @@
  # ifdef ppc
  	"-Dppc",
@@ -236,9 +236,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/config/imake/imakemdep.h nx-X11/config
  #if defined(__BIG_ENDIAN__)
        {"__BIG_ENDIAN__", "1"},
  #endif
-diff -Nru /home/couriousous/nx-1.5/nx-X11/include/Xmd.h nx-X11/include/Xmd.h
---- /home/couriousous/nx-1.5/nx-X11/include/Xmd.h	2002-05-31 20:45:40.000000000 +0200
-+++ nx-X11/include/Xmd.h	2005-07-09 15:07:22.187305983 +0200
+diff -ur nx-2.0.0-o/nx-X11/include/Xmd.h nx-2.0.0/nx-X11/include/Xmd.h
+--- nx-2.0.0-o/nx-X11/include/Xmd.h	2006-06-19 08:19:05.000000000 -0600
++++ nx-2.0.0/nx-X11/include/Xmd.h	2006-07-09 22:27:28.000000000 -0600
 @@ -63,7 +63,8 @@
      defined(__sparc64__) || \
      defined(__s390x__) || \
@@ -249,10 +249,10 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/include/Xmd.h nx-X11/include/Xmd.h
  #define LONG64				/* 32/64-bit architecture */
  #endif
  #ifdef __sgi
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/Imakefile nx-X11/lib/X11/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/X11/Imakefile	2004-04-27 23:05:26.000000000 +0200
-+++ nx-X11/lib/X11/Imakefile	2005-07-09 15:07:22.188306006 +0200
-@@ -75,7 +75,7 @@
+diff -ur nx-2.0.0-o/nx-X11/lib/X11/Imakefile nx-2.0.0/nx-X11/lib/X11/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/X11/Imakefile	2006-06-19 08:20:43.000000000 -0600
++++ nx-2.0.0/nx-X11/lib/X11/Imakefile	2006-07-09 22:27:28.000000000 -0600
+@@ -62,7 +62,7 @@
  #define DoExtraLib SharedLibX11
  #define DoDebugLib DebugLibX11
  #define DoProfileLib ProfileLibX11
@@ -261,9 +261,10 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/Imakefile nx-X11/lib/X11/Imake
  #define SoRev SOXLIBREV
  #define HugeLibrary YES
  #define IncSubdir X11
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/XlcDL.c nx-X11/lib/X11/XlcDL.c
---- /home/couriousous/nx-1.5/nx-X11/lib/X11/XlcDL.c	2002-11-25 15:04:54.000000000 +0100
-+++ nx-X11/lib/X11/XlcDL.c	2005-07-09 15:07:22.188306006 +0200
+Only in nx-2.0.0/nx-X11/lib/X11: Imakefile.orig
+diff -ur nx-2.0.0-o/nx-X11/lib/X11/XlcDL.c nx-2.0.0/nx-X11/lib/X11/XlcDL.c
+--- nx-2.0.0-o/nx-X11/lib/X11/XlcDL.c	2006-06-19 08:20:46.000000000 -0600
++++ nx-2.0.0/nx-X11/lib/X11/XlcDL.c	2006-07-09 22:27:28.000000000 -0600
 @@ -58,10 +58,8 @@
  #ifdef _LP64
  # if defined(__sparcv9)
@@ -276,9 +277,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/XlcDL.c nx-X11/lib/X11/XlcDL.c
  # endif /* defined(__sparcv9) */
  # ifdef _MACH64_NAME
  #  define	_MACH64_NAME_LEN	(sizeof (_MACH64_NAME) - 1)
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile	2001-11-16 01:52:30.000000000 +0100
-+++ nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile	2005-07-09 15:07:22.189306028 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile nx-2.0.0/nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile	2001-11-15 17:52:30.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -13,7 +13,7 @@
  
     CONN_DEFINES = ConnectionFlags
@@ -288,21 +289,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/im/ximcp/Imakefile nx
  
  LinkSourceFile(imCallbk.c, ../../..)
  LinkSourceFile(imDefFlt.c, ../../..)
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/Utf8/Imakefile nx-X11/lib/X11/xlibi18n/lc/Utf8/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/Utf8/Imakefile	2001-11-16 01:52:30.000000000 +0100
-+++ nx-X11/lib/X11/xlibi18n/lc/Utf8/Imakefile	2005-07-09 15:07:22.189306028 +0200
-@@ -4,7 +4,7 @@
-       XI18NLIBNAME = xlibi18n
-            SRCS = lcUTF8Load.c
-            OBJS = ${SRCS:.c=.o}
--   REQUIREDLIBS = -L$(XENVLIBDIR) -lX11 -lc
-+   REQUIREDLIBS = -L$(XENVLIBDIR) -lX11-nx -lc
- 
- LinkSourceFile(lcUTF8Load.c, ../../..)
- 
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/def/Imakefile nx-X11/lib/X11/xlibi18n/lc/def/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/def/Imakefile	2001-11-16 01:52:30.000000000 +0100
-+++ nx-X11/lib/X11/xlibi18n/lc/def/Imakefile	2005-07-09 15:07:22.189306028 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/lc/def/Imakefile nx-2.0.0/nx-X11/lib/X11/xlibi18n/lc/def/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/lc/def/Imakefile	2001-11-15 17:52:30.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/X11/xlibi18n/lc/def/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -4,7 +4,7 @@
        XI18NLIBNAME = xlcDef
             SRCS = lcDefConv.c
@@ -312,9 +301,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/def/Imakefile nx-X
  
  LinkSourceFile(lcDefConv.c, ../../..)
  
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile	2001-11-16 01:52:30.000000000 +0100
-+++ nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile	2005-07-09 15:07:22.189306028 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile nx-2.0.0/nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile	2001-11-15 17:52:30.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -4,7 +4,7 @@
        XI18NLIBNAME = xlibi18n
             SRCS = lcGenConv.c
@@ -324,9 +313,21 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/gen/Imakefile nx-X
  
  LinkSourceFile(lcGenConv.c, ../../..)
  
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile	2001-11-16 01:52:30.000000000 +0100
-+++ nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile	2005-07-09 15:07:22.190306051 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/lc/Utf8/Imakefile nx-2.0.0/nx-X11/lib/X11/xlibi18n/lc/Utf8/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/lc/Utf8/Imakefile	2001-11-15 17:52:30.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/X11/xlibi18n/lc/Utf8/Imakefile	2006-07-09 22:27:28.000000000 -0600
+@@ -4,7 +4,7 @@
+       XI18NLIBNAME = xlibi18n
+            SRCS = lcUTF8Load.c
+            OBJS = ${SRCS:.c=.o}
+-   REQUIREDLIBS = -L$(XENVLIBDIR) -lX11 -lc
++   REQUIREDLIBS = -L$(XENVLIBDIR) -lX11-nx -lc
+ 
+ LinkSourceFile(lcUTF8Load.c, ../../..)
+ 
+diff -ur nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile nx-2.0.0/nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile	2001-11-15 17:52:30.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -4,7 +4,7 @@
        XI18NLIBNAME = xlocale
             SRCS = lcEuc.c lcSjis.c lcJis.c
@@ -336,9 +337,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/lc/xlocale/Imakefile 
  
  LinkSourceFile(lcEuc.c, ../../..)
  LinkSourceFile(lcSjis.c, ../../..)
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/om/generic/Imakefile nx-X11/lib/X11/xlibi18n/om/generic/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/om/generic/Imakefile	2001-11-16 01:52:30.000000000 +0100
-+++ nx-X11/lib/X11/xlibi18n/om/generic/Imakefile	2005-07-09 15:07:22.190306051 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/om/generic/Imakefile nx-2.0.0/nx-X11/lib/X11/xlibi18n/om/generic/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/X11/xlibi18n/om/generic/Imakefile	2001-11-15 17:52:30.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/X11/xlibi18n/om/generic/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -5,7 +5,7 @@
  		  omTextEsc.c omTextExt.c omTextPer.c omXChar.c
  
@@ -348,9 +349,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/X11/xlibi18n/om/generic/Imakefile 
  
  LinkSourceFile(omDefault.c, ../../..)
  LinkSourceFile(omGeneric.c, ../../..)
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xaw/Imakefile nx-X11/lib/Xaw/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/Xaw/Imakefile	2001-01-17 20:42:28.000000000 +0100
-+++ nx-X11/lib/Xaw/Imakefile	2005-07-09 15:07:22.190306051 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/Xaw/Imakefile nx-2.0.0/nx-X11/lib/Xaw/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/Xaw/Imakefile	2001-01-17 12:42:28.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/Xaw/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -194,6 +194,9 @@
  	XawI18n.o \
  	XawInit.o
@@ -361,9 +362,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xaw/Imakefile nx-X11/lib/Xaw/Imake
  #include <Library.tmpl>
  
  #if DoSharedLib && SharedDataSeparation
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xaw6/Imakefile nx-X11/lib/Xaw6/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/Xaw6/Imakefile	2002-05-31 20:45:44.000000000 +0200
-+++ nx-X11/lib/Xaw6/Imakefile	2005-07-09 15:07:22.190306051 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/Xaw6/Imakefile nx-2.0.0/nx-X11/lib/Xaw6/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/Xaw6/Imakefile	2002-05-31 12:45:44.000000000 -0600
++++ nx-2.0.0/nx-X11/lib/Xaw6/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -115,6 +115,9 @@
  
  INCLUDES = -I$(AWIDGETSRC)
@@ -374,10 +375,10 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xaw6/Imakefile nx-X11/lib/Xaw6/Ima
  #include <Library.tmpl>
  
  #if DoSharedLib && SharedDataSeparation
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xext/Imakefile nx-X11/lib/Xext/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/Xext/Imakefile	2003-07-01 12:55:46.000000000 +0200
-+++ nx-X11/lib/Xext/Imakefile	2005-07-09 15:07:22.191306073 +0200
-@@ -30,16 +30,18 @@
+diff -ur nx-2.0.0-o/nx-X11/lib/Xext/Imakefile nx-2.0.0/nx-X11/lib/Xext/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/Xext/Imakefile	2003-05-06 07:29:38.000000000 -0600
++++ nx-2.0.0/nx-X11/lib/Xext/Imakefile	2006-07-09 22:30:25.000000000 -0600
+@@ -10,14 +10,15 @@
  #define DoExtraLib SharedLibXext
  #define DoDebugLib DebugLibXext
  #define DoProfileLib ProfileLibXext
@@ -389,18 +390,19 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xext/Imakefile nx-X11/lib/Xext/Ima
  #include <Threads.tmpl>
  
  #ifdef SharedXextReqs
--REQUIREDLIBS = SharedXextReqs $(NX_REQUIREDLIBS)
+-REQUIREDLIBS = SharedXextReqs
 +/* REQUIREDLIBS = SharedXextReqs $(NX_REQUIREDLIBS) */
 +REQUIREDLIBS = -L../../exports/lib/ -lX11-nx $(NX_REQUIREDLIBS)
  #endif
  
-+
  #if HasShm
-       SHMSRCS = XShm.c
-       SHMOBJS = XShm.o
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xrender/Imakefile nx-X11/lib/Xrender/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/Xrender/Imakefile	2002-11-14 22:01:18.000000000 +0100
-+++ nx-X11/lib/Xrender/Imakefile	2005-07-09 15:07:22.191306073 +0200
+Only in nx-2.0.0/nx-X11/lib/Xext: Imakefile~
+Only in nx-2.0.0/nx-X11/lib/Xext: Imakefile.orig
+Only in nx-2.0.0/nx-X11/lib/Xext: Imakefile.rej
+Only in nx-2.0.0/nx-X11/lib/Xext: Imakefile.rej~
+diff -ur nx-2.0.0-o/nx-X11/lib/Xrender/Imakefile nx-2.0.0/nx-X11/lib/Xrender/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/Xrender/Imakefile	2002-11-14 14:01:18.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/Xrender/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -74,7 +74,7 @@
  #define DoSharedLib SharedLibXrender
  #define DoDebugLib DebugLibXrender
@@ -420,9 +422,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xrender/Imakefile nx-X11/lib/Xrend
  #endif
  
  #if Malloc0ReturnsNull
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xt/Xtos.h nx-X11/lib/Xt/Xtos.h
---- /home/couriousous/nx-1.5/nx-X11/lib/Xt/Xtos.h	2002-04-04 16:05:36.000000000 +0200
-+++ nx-X11/lib/Xt/Xtos.h	2005-07-09 15:07:22.191306073 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/Xt/Xtos.h nx-2.0.0/nx-X11/lib/Xt/Xtos.h
+--- nx-2.0.0-o/nx-X11/lib/Xt/Xtos.h	2002-04-04 07:05:36.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/Xt/Xtos.h	2006-07-09 22:27:28.000000000 -0600
 @@ -66,7 +66,8 @@
      defined(__sparc64__) || \
      defined(__s390x__) || \
@@ -433,9 +435,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xt/Xtos.h nx-X11/lib/Xt/Xtos.h
  #define LONG64
  #endif
  
-diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xxf86dga/Imakefile nx-X11/lib/Xxf86dga/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/lib/Xxf86dga/Imakefile	2003-01-04 03:48:26.000000000 +0100
-+++ nx-X11/lib/Xxf86dga/Imakefile	2005-07-09 15:07:22.195306163 +0200
+diff -ur nx-2.0.0-o/nx-X11/lib/Xxf86dga/Imakefile nx-2.0.0/nx-X11/lib/Xxf86dga/Imakefile
+--- nx-2.0.0-o/nx-X11/lib/Xxf86dga/Imakefile	2003-01-03 19:48:26.000000000 -0700
++++ nx-2.0.0/nx-X11/lib/Xxf86dga/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -28,6 +28,9 @@
  
  #define IncludeSharedObjectInNormalLib
@@ -446,89 +448,9 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/lib/Xxf86dga/Imakefile nx-X11/lib/Xxf8
  #include <Library.tmpl>
  
  DependTarget()
-diff -Nru /home/couriousous/nx-1.5/nx-X11/programs/Xserver/Imakefile nx-X11/programs/Xserver/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/programs/Xserver/Imakefile	2005-05-01 18:23:52.000000000 +0200
-+++ nx-X11/programs/Xserver/Imakefile	2005-07-09 15:14:10.706526164 +0200
-@@ -1355,7 +1355,7 @@
- XPMLIB =  -lXpm
- NXAGENT = hw/nxagent/LibraryTargetName(nxagent)
- NXAGENTLIBS = PreFbLibs $(NXAGENT) FbPostFbLibs $(NXAGENT) $(MI)
--NXAGENTSYSLIBS = $(FONTLIBS) $(LDPRELIBS) $(XLIB) $(SYSLIBS) $(XPMLIB)
-+NXAGENTSYSLIBS = $(FONTLIBS) $(LDPRELIBS) -lX11-nx -lXext-nx -lXrender-nx $(SYSLIBS) $(XPMLIB)
- #if HasParallelMake
- MakeMutex($(NXAGENTDIRS) $(NXAGENTOBJS) $(NXAGENTLIBS) $(NXAGENTSYSLIBS))
- #endif
-@@ -1371,7 +1371,7 @@
- #if defined(SunArchitecture)
- NXAGENTNXLIBS = -L ../../../nxcomp -L ../../../nxcompext -lXcomp -lXcompext -lrt -L/usr/sfw/lib -lXrender
- #else
--NXAGENTNXLIBS = -Wl,-rpath-link,../../../nxcomp -Wl,-rpath-link,../../../nxcompext,-lXrender
-+NXAGENTNXLIBS = -Wl,-rpath-link,../../../nxcomp -Wl,-rpath-link,../../../nxcompext
- #endif
- 
- #endif
-diff -Nru /home/couriousous/nx-1.5/nx-X11/programs/Xserver/fb/fb.h nx-X11/programs/Xserver/fb/fb.h
---- /home/couriousous/nx-1.5/nx-X11/programs/Xserver/fb/fb.h	2003-01-30 22:46:30.000000000 +0100
-+++ nx-X11/programs/Xserver/fb/fb.h	2005-07-09 15:07:22.197306208 +0200
-@@ -105,7 +105,8 @@
-       defined(ia64) || defined(__ia64__) || \
-       defined(__sparc64__) || \
-       defined(__s390x__) || \
--      defined(x86_64) || defined (__x86_64__)
-+      defined(x86_64) || defined (__x86_64__) || \
-+      defined(powerpc64) || defined (__powerpc64__)
- typedef unsigned long	    FbBits;
- #  else
- typedef unsigned long long  FbBits;
-diff -Nru /home/couriousous/nx-1.5/nx-X11/programs/Xserver/hw/xfree86/fbdevhw/Imakefile nx-X11/programs/Xserver/hw/xfree86/fbdevhw/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/programs/Xserver/hw/xfree86/fbdevhw/Imakefile	2002-11-22 23:56:04.000000000 +0100
-+++ nx-X11/programs/Xserver/hw/xfree86/fbdevhw/Imakefile	2005-07-09 15:07:22.197306208 +0200
-@@ -1,6 +1,8 @@
- XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/fbdevhw/Imakefile,v 1.12 2002/11/22 22:56:03 tsi Exp $
- 
- #define IHaveModules
-+#undef DefaultCCOptions
-+#define DefaultCCOptions GccWarningOptions
- #include <Server.tmpl>
- 
- #if defined(LinuxArchitecture) && LinuxFBDevSupport
-diff -Nru /home/couriousous/nx-1.5/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Imakefile nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Imakefile	2003-02-23 21:26:50.000000000 +0100
-+++ nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Imakefile	2005-07-09 15:07:22.198306230 +0200
-@@ -34,6 +34,7 @@
- 
- #elif defined(LinuxArchitecture) && \
-       (defined(PpcArchitecture) || \
-+       defined(Ppc64Architecture) || \
-        defined(MipsArchitecture) || \
-        defined(ia64Architecture) || \
-        defined(Mc68020Architecture) || \
-diff -Nru /home/couriousous/nx-1.5/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Pci.h nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Pci.h
---- /home/couriousous/nx-1.5/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Pci.h	2002-12-23 16:37:26.000000000 +0100
-+++ nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Pci.h	2005-07-09 15:07:22.198306230 +0200
-@@ -252,7 +252,7 @@
- #  define INCLUDE_XF86_MAP_PCI_MEM
- #  define INCLUDE_XF86_NO_DOMAIN
- # endif
--#elif defined(__powerpc__)
-+#elif defined(__powerpc__) || defined(__powerpc64__)
- # if defined(linux)
- #  define ARCH_PCI_INIT linuxPciInit
- #  define INCLUDE_XF86_MAP_PCI_MEM
-diff -Nru /home/couriousous/nx-1.5/nx-X11/programs/Xserver/os/xalloc.c nx-X11/programs/Xserver/os/xalloc.c
---- /home/couriousous/nx-1.5/nx-X11/programs/Xserver/os/xalloc.c	2003-07-01 15:22:30.000000000 +0200
-+++ nx-X11/programs/Xserver/os/xalloc.c	2005-07-09 15:07:22.201306298 +0200
-@@ -183,6 +183,7 @@
-     defined(__ia64__) || defined(ia64) || \
-     defined(__sparc64__) || \
-     defined(__s390x__) || \
-+    defined(__powerpc64__) || \
-     defined(__x86_64__) || defined(x86_64)
- #define MAGIC			0x1404196414071968
- #define MAGIC_FREE              0x1506196615061966
-diff -Nru /home/couriousous/nx-1.5/nx-X11/programs/xedit/lisp/Imakefile nx-X11/programs/xedit/lisp/Imakefile
---- /home/couriousous/nx-1.5/nx-X11/programs/xedit/lisp/Imakefile	2002-12-14 05:41:14.000000000 +0100
-+++ nx-X11/programs/xedit/lisp/Imakefile	2005-07-09 15:07:22.196306185 +0200
+diff -ur nx-2.0.0-o/nx-X11/programs/xedit/lisp/Imakefile nx-2.0.0/nx-X11/programs/xedit/lisp/Imakefile
+--- nx-2.0.0-o/nx-X11/programs/xedit/lisp/Imakefile	2002-12-13 21:41:14.000000000 -0700
++++ nx-2.0.0/nx-X11/programs/xedit/lisp/Imakefile	2006-07-09 22:27:28.000000000 -0600
 @@ -98,6 +98,9 @@
  		write.o \
  		xedit.o
@@ -539,3 +461,86 @@ diff -Nru /home/couriousous/nx-1.5/nx-X11/programs/xedit/lisp/Imakefile nx-X11/p
  #include <Library.tmpl>
  
  AllTarget(ProgramTargetName($(SAMP)))
+diff -ur nx-2.0.0-o/nx-X11/programs/Xserver/fb/fb.h nx-2.0.0/nx-X11/programs/Xserver/fb/fb.h
+--- nx-2.0.0-o/nx-X11/programs/Xserver/fb/fb.h	2003-01-30 14:46:30.000000000 -0700
++++ nx-2.0.0/nx-X11/programs/Xserver/fb/fb.h	2006-07-09 22:27:28.000000000 -0600
+@@ -105,7 +105,8 @@
+       defined(ia64) || defined(__ia64__) || \
+       defined(__sparc64__) || \
+       defined(__s390x__) || \
+-      defined(x86_64) || defined (__x86_64__)
++      defined(x86_64) || defined (__x86_64__) || \
++      defined(powerpc64) || defined (__powerpc64__)
+ typedef unsigned long	    FbBits;
+ #  else
+ typedef unsigned long long  FbBits;
+diff -ur nx-2.0.0-o/nx-X11/programs/Xserver/hw/xfree86/fbdevhw/Imakefile nx-2.0.0/nx-X11/programs/Xserver/hw/xfree86/fbdevhw/Imakefile
+--- nx-2.0.0-o/nx-X11/programs/Xserver/hw/xfree86/fbdevhw/Imakefile	2002-11-22 15:56:04.000000000 -0700
++++ nx-2.0.0/nx-X11/programs/Xserver/hw/xfree86/fbdevhw/Imakefile	2006-07-09 22:27:28.000000000 -0600
+@@ -1,6 +1,8 @@
+ XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/fbdevhw/Imakefile,v 1.12 2002/11/22 22:56:03 tsi Exp $
+ 
+ #define IHaveModules
++#undef DefaultCCOptions
++#define DefaultCCOptions GccWarningOptions
+ #include <Server.tmpl>
+ 
+ #if defined(LinuxArchitecture) && LinuxFBDevSupport
+diff -ur nx-2.0.0-o/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Imakefile nx-2.0.0/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Imakefile
+--- nx-2.0.0-o/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Imakefile	2003-02-23 13:26:50.000000000 -0700
++++ nx-2.0.0/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Imakefile	2006-07-09 22:27:28.000000000 -0600
+@@ -34,6 +34,7 @@
+ 
+ #elif defined(LinuxArchitecture) && \
+       (defined(PpcArchitecture) || \
++       defined(Ppc64Architecture) || \
+        defined(MipsArchitecture) || \
+        defined(ia64Architecture) || \
+        defined(Mc68020Architecture) || \
+diff -ur nx-2.0.0-o/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Pci.h nx-2.0.0/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Pci.h
+--- nx-2.0.0-o/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Pci.h	2002-12-23 08:37:26.000000000 -0700
++++ nx-2.0.0/nx-X11/programs/Xserver/hw/xfree86/os-support/bus/Pci.h	2006-07-09 22:27:28.000000000 -0600
+@@ -252,7 +252,7 @@
+ #  define INCLUDE_XF86_MAP_PCI_MEM
+ #  define INCLUDE_XF86_NO_DOMAIN
+ # endif
+-#elif defined(__powerpc__)
++#elif defined(__powerpc__) || defined(__powerpc64__)
+ # if defined(linux)
+ #  define ARCH_PCI_INIT linuxPciInit
+ #  define INCLUDE_XF86_MAP_PCI_MEM
+diff -ur nx-2.0.0-o/nx-X11/programs/Xserver/Imakefile nx-2.0.0/nx-X11/programs/Xserver/Imakefile
+--- nx-2.0.0-o/nx-X11/programs/Xserver/Imakefile	2006-06-19 08:21:04.000000000 -0600
++++ nx-2.0.0/nx-X11/programs/Xserver/Imakefile	2006-07-09 22:29:33.000000000 -0600
+@@ -1382,7 +1382,7 @@
+ XPMLIB =  -lXpm
+ NXAGENT = hw/nxagent/LibraryTargetName(nxagent)
+ NXAGENTLIBS = PreFbLibs $(NXAGENT) FbPostFbLibs $(NXAGENT) $(MI)
+-NXAGENTSYSLIBS = $(FONTLIBS) $(LDPRELIBS) $(XLIB) $(SYSLIBS) $(XPMLIB)
++NXAGENTSYSLIBS = $(FONTLIBS) $(LDPRELIBS) -lX11-nx -lXext-nx -lXrender-nx $(SYSLIBS) $(XPMLIB)
+ #if HasParallelMake
+ MakeMutex($(NXAGENTDIRS) $(NXAGENTOBJS) $(NXAGENTLIBS) $(NXAGENTSYSLIBS))
+ #endif
+@@ -1398,7 +1398,7 @@
+ #if defined(SunArchitecture)
+ NXAGENTNXLIBS = -L ../../../nxcomp -L ../../../nxcompext -lXcomp -lXcompext -lrt -L/usr/sfw/lib -lXrender
+ #else
+-NXAGENTNXLIBS = -L ../../../nxcomp -L ../../../nxcompext -lXcomp -lXcompext -lXrender -lX11 -lXext
++NXAGENTNXLIBS = -Wl,-rpath-link,../../../nxcomp -Wl,-rpath-link,../../../nxcompext
+ #endif
+ 
+ #endif
+Only in nx-2.0.0/nx-X11/programs/Xserver: Imakefile~
+Only in nx-2.0.0/nx-X11/programs/Xserver: Imakefile.orig
+Only in nx-2.0.0/nx-X11/programs/Xserver: Imakefile.rej
+diff -ur nx-2.0.0-o/nx-X11/programs/Xserver/os/xalloc.c nx-2.0.0/nx-X11/programs/Xserver/os/xalloc.c
+--- nx-2.0.0-o/nx-X11/programs/Xserver/os/xalloc.c	2006-06-19 08:21:27.000000000 -0600
++++ nx-2.0.0/nx-X11/programs/Xserver/os/xalloc.c	2006-07-09 22:27:28.000000000 -0600
+@@ -183,6 +183,7 @@
+     defined(__ia64__) || defined(ia64) || \
+     defined(__sparc64__) || \
+     defined(__s390x__) || \
++    defined(__powerpc64__) || \
+     defined(__x86_64__) || defined(x86_64)
+ #define MAGIC			0x1404196414071968
+ #define MAGIC_FREE              0x1506196615061966
