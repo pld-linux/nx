@@ -24,36 +24,6 @@ diff -purN nx-X11.orig/lib/fontconfig/src/fontconfig.man nx-X11/lib/fontconfig/s
  
  <!--
  	Accept deprecated 'mono' alias, replacing it with 'monospace'
-diff -purN nx-X11.orig/programs/Xserver/hw/nxagent/Font.c nx-X11/programs/Xserver/hw/nxagent/Font.c
---- nx-X11.orig/programs/Xserver/hw/nxagent/Font.c	2005-12-12 10:51:51.000000000 -0600
-+++ nx-X11/programs/Xserver/hw/nxagent/Font.c	2006-03-21 08:14:17.000000000 -0600
-@@ -60,13 +60,13 @@ is" without express or implied warranty.
- #undef  TEST
- #undef  DEBUG
- 
--#define NXAGENT_DEFAULT_FONT_DIR    "/usr/X11R6/lib/X11/fonts"
-+#define NXAGENT_DEFAULT_FONT_DIR    "/usr/share/fonts"
- #define NXAGENT_ALTERNATE_FONT_DIR  "/usr/share/X11/fonts"
- 
- #define NXAGENT_DEFAULT_FONT_PATH  \
--"/usr/X11R6/lib/X11/fonts/misc/,/usr/X11R6/lib/X11/fonts/Speedo/,\
--/usr/X11R6/lib/X11/fonts/Type1/,/usr/X11R6/lib/X11/fonts/75dpi/,\
--/usr/X11R6/lib/X11/fonts/100dpi/,/usr/X11R6/lib/X11/fonts/TTF/"
-+"/usr/share/fonts/misc/,/usr/share/fonts/Speedo/,\
-+/usr/share/fonts/Type1/,/usr/share/fonts/75dpi/,\
-+/usr/share/fonts/100dpi/,/usr/share/fonts/TTF/"
- 
- #define NXAGENT_ALTERNATE_FONT_PATH  \
- "/usr/share/X11/fonts/misc/,/usr/share/X11/fonts/Speedo/,\
-@@ -1008,7 +1008,7 @@ void nxagentVerifyDefaultFontPath(void)
-           S_ISDIR(dirStat.st_mode) != 0)
-   {
-     /*
--     * Let's use the old "/usr/X11R6/lib/X11/fonts" style.
-+     * Let's use the old "/usr/share/fonts" style.
-      */
- 
-     #ifdef TEST
 diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/Install nx-X11/programs/Xserver/hw/xfree86/doc/Install
 --- nx-X11.orig/programs/Xserver/hw/xfree86/doc/Install	2003-02-24 23:29:10.000000000 -0600
 +++ nx-X11/programs/Xserver/hw/xfree86/doc/Install	2006-03-21 08:14:26.000000000 -0600
@@ -62,7 +32,7 @@ diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/Install nx-X11/programs/X
       /sbin/ldconfig /usr/X11R6/lib       # For Linux
       /sbin/ldconfig -m /usr/X11R6/lib    # For FreeBSD, NetBSD, OpenBSD
 -     /usr/X11R6/bin/mkfontdir /usr/X11R6/lib/X11/fonts/misc
-+     /usr/X11R6/bin/mkfontdir /usr/share/fonts/misc
++     /usr/bin/mkfontdir /usr/share/fonts/misc
  
  4.2  Installing over an old installation
  
@@ -71,7 +41,7 @@ diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/Install nx-X11/programs/X
       /sbin/ldconfig /usr/X11R6/lib       # For Linux
       /sbin/ldconfig -m /usr/X11R6/lib    # For FreeBSD, NetBSD, OpenBSD
 -     /usr/X11R6/bin/mkfontdir /usr/X11R6/lib/X11/fonts/misc
-+     /usr/X11R6/bin/mkfontdir /usr/share/fonts/misc
++     /usr/bin/mkfontdir /usr/share/fonts/misc
  
       Generated from XFree86: xc/programs/Xserver/hw/xfree86/doc/sgml/Install.sgml,v 1.17 2003/02/24 17:09:16 dawes Exp $
  
@@ -107,25 +77,10 @@ diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/Japanese/sgml/RELNOTE.sgm
  
  <tscreen><verb>
 -	/usr/X11R6/bin/mkfontdir /usr/X11R6/lib/X11/fonts/misc
-+	/usr/X11R6/bin/mkfontdir /usr/share/fonts/misc
++	/usr/bin/mkfontdir /usr/share/fonts/misc
  </verb></tscreen>
   
  An up-to-date version of the xterm termcap and terminfo entries is
-diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/README.SVR4 nx-X11/programs/Xserver/hw/xfree86/doc/README.SVR4
---- nx-X11.orig/programs/Xserver/hw/xfree86/doc/README.SVR4	2000-02-29 19:48:14.000000000 -0600
-+++ nx-X11/programs/Xserver/hw/xfree86/doc/README.SVR4	2006-03-21 08:14:27.000000000 -0600
-@@ -295,9 +295,9 @@ you need to do:
-                 for i in *pc???.bdf
-                 do
-                     /usr/X11R6/bin/bdftopcf $i > \
--                          /usr/X11R6/lib/X11/fonts/misc/`basename $i .bdf`.pcf
-+                          /usr/share/fonts/misc/`basename $i .bdf`.pcf
-                 done
--                cd /usr/X11R6/lib/X11/fonts/misc
-+                cd /usr/share/fonts/misc
-                 /usr/X11R6/bin/mkfontdir
-                 # Do this only if the server is already running.
-                 /usr/X11R6/bin/xset fp rehash
 diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/README.fonts nx-X11/programs/Xserver/hw/xfree86/doc/README.fonts
 --- nx-X11.orig/programs/Xserver/hw/xfree86/doc/README.fonts	2003-01-19 22:10:02.000000000 -0600
 +++ nx-X11/programs/Xserver/hw/xfree86/doc/README.fonts	2006-03-21 08:14:27.000000000 -0600
@@ -214,27 +169,6 @@ diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/README.fonts nx-X11/progr
  
  The name of an encoding must be specified in the encoding file's `STARTENCOD-
  ING' or `ALIAS' line.  It is not enough to create an `encodings.dir' entry.
-diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/sgml/Install.sgml nx-X11/programs/Xserver/hw/xfree86/doc/sgml/Install.sgml
---- nx-X11.orig/programs/Xserver/hw/xfree86/doc/sgml/Install.sgml	2003-02-24 11:09:16.000000000 -0600
-+++ nx-X11/programs/Xserver/hw/xfree86/doc/sgml/Install.sgml	2006-03-21 08:14:26.000000000 -0600
-@@ -432,7 +432,7 @@ ln -s /etc/X11/xserver /usr/X11R6/lib/X1
- chmod ug-w /usr/X11R6/lib           # Make sure the permissions are OK
- /sbin/ldconfig /usr/X11R6/lib       # For Linux
- /sbin/ldconfig -m /usr/X11R6/lib    # For FreeBSD, NetBSD, OpenBSD
--/usr/X11R6/bin/mkfontdir /usr/X11R6/lib/X11/fonts/misc
-+/usr/X11R6/bin/mkfontdir /usr/share/fonts/misc
- </verb></tscreen>
- 
- <sect1>Installing over an old installation
-@@ -511,7 +511,7 @@ Once that's done, the main part of the i
- chmod ug-w /usr/X11R6/lib           # Make sure the permissions are OK
- /sbin/ldconfig /usr/X11R6/lib       # For Linux
- /sbin/ldconfig -m /usr/X11R6/lib    # For FreeBSD, NetBSD, OpenBSD
--/usr/X11R6/bin/mkfontdir /usr/X11R6/lib/X11/fonts/misc
-+/usr/X11R6/bin/mkfontdir /usr/share/fonts/misc
- </verb></tscreen>
- 
- ]]>
 diff -purN nx-X11.orig/programs/Xserver/hw/xfree86/doc/sgml/SVR4.sgml nx-X11/programs/Xserver/hw/xfree86/doc/sgml/SVR4.sgml
 --- nx-X11.orig/programs/Xserver/hw/xfree86/doc/sgml/SVR4.sgml	1999-08-23 01:38:52.000000000 -0500
 +++ nx-X11/programs/Xserver/hw/xfree86/doc/sgml/SVR4.sgml	2006-03-21 08:14:26.000000000 -0600
