@@ -1,0 +1,15 @@
+Only in nx-2.0.0/nxviewer: Imakefile.orig
+Only in nx-2.0.0/nxviewer: Imakefile.rej
+diff -ur nx-2.0.0-o/nxviewer/nxviewer/Imakefile nx-2.0.0/nxviewer/nxviewer/Imakefile
+--- nx-2.0.0-o/nxviewer/nxviewer/Imakefile	2006-02-22 10:23:57.000000000 -0700
++++ nx-2.0.0/nxviewer/nxviewer/Imakefile	2006-07-10 08:32:42.000000000 -0600
+@@ -51,6 +51,8 @@
+ 
+ DEPLIBS = XawClientDepLibs $(VNCAUTH_LIB)
+ 
++#define XawClientLibs -L/usr/X11R6/lib -lXaw -lXmu -lXt -lSM -lICE -lXpm -lXext-nx -lX11-nx
++
+ #ifdef SunArchitecture
+ LOCAL_LIBRARIES = $(NX_LIB) $(SUN_LIB) XawClientLibs $(VNCAUTH_LIB) $(ZLIB_LIB) $(JPEG_LIB)
+ #else
+Only in nx-2.0.0/nxviewer/nxviewer: Imakefile~
