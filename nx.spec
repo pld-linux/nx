@@ -49,6 +49,9 @@ BuildRequires:	xorg-cf-files
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-util-imake
+Requires:	xorg-font-font-cursor-misc
+Requires:	xorg-font-font-misc-misc-base
+Requires:	xorg-font-font-misc-misc
 Provides:	nx-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
