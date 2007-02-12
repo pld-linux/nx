@@ -8,7 +8,7 @@
 %define	_proxy_minor	2
 %define	_X11_minor	31
 Summary:	NoMachine NX is the next-generation X compression scheme
-Summary(pl):	NoMachine NX to schemat kompresji nowej generacji dla X
+Summary(pl.UTF-8):   NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	2.0.0
 Release:	2
@@ -60,9 +60,9 @@ NoMachine NX is the next-generation X compression and roundtrip
 suppression scheme. It can operate remote X11 sessions over 56k modem
 dialup links or anything better.
 
-%description -l pl
-NoMachine NX to schemat kompresji dla X nowej generacji. Dzia³a na
-zdalnych sesjach X11 nawet przy prêdkosci 56k albo wiêkszej.
+%description -l pl.UTF-8
+NoMachine NX to schemat kompresji dla X nowej generacji. DziaÅ‚a na
+zdalnych sesjach X11 nawet przy prÄ™dkosci 56k albo wiÄ™kszej.
 
 %prep
 %setup -q -c -a1 -a2 -a4 -a5 -a7
