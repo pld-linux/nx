@@ -1,32 +1,32 @@
 # TODO:
 # - build packages from separate specs where possible
 # - use optflags where missing
-%define	_agent_minor	93
-%define	_auth_minor	3
-%define	_desktop_minor	50
-%define	_viewer_minor	15
-%define	_proxy_minor	2
-%define	_X11_minor	31
+%define	_agent_minor	20
+%define	_auth_minor	2
+%define	_desktop_minor	10
+%define	_viewer_minor	12
+%define	_proxy_minor	3
+%define	_X11_minor	3
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
-Version:	2.0.0
-Release:	2
+Version:	2.1.0
+Release:	1
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
 Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
-# Source0-md5:	0c63cfdc37658eb74f4a84077b05fe9e
+# Source0-md5:	9c6e9e4c35c4ec3a7664fcdd397eb7f0
 Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
-# Source1-md5:	d08f5872a88902ccecd17312e4255aab
+# Source1-md5:	868d972aaba6577aa5e8873644d7c3fb
 Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
-# Source2-md5:	8385751f7ab9c6407a56e95356030ba4
+# Source2-md5:	74811bc9ef86f2d97b3b2ba2ba53f9d3
 Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}desktop-%{version}-%{_desktop_minor}.tar.gz
-# Source4-md5:	f55dc97544a061dfa0f099329dcc3f53
+# Source4-md5:	f96395297324ffe249fdec3065d754be
 Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}viewer-%{version}-%{_viewer_minor}.tar.gz
-# Source5-md5:	0e4b1d546b4b8a0224cd0d200ec88827
+# Source5-md5:	e9f5b692278025856b09bd71d0966100
 Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
-# Source7-md5:	b078c19372c82e85667cbbac880fa688
+# Source7-md5:	29b0e8be069a8258f5b8774362fc7464
 Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
@@ -69,7 +69,7 @@ zdalnych sesjach X11 nawet przy prędkosci 56k albo większej.
 %patch0 -p1
 #%patch1
 %patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 %patch4 -p0
 %patch5 -p1
 
