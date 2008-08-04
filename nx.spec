@@ -1,38 +1,38 @@
-# TODO:
-# - build packages from separate specs where possible
-# - use optflags where missing
-%define	_agent_minor	20
-%define	_auth_minor	2
-%define	_desktop_minor	10
-%define	_viewer_minor	12
-%define	_proxy_minor	3
-%define	_X11_minor	3
+%define		_agent_minor	8
+%define		_auth_minor	1
+%define		_comp_minor	7
+%define		_compext_minor	1
+%define	 	_compshad_minor	3
+%define		_proxy_minor	1
+%define		_X11_minor	2
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
-Version:	2.1.0
+Version:	3.2.0
 Release:	1
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
 Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
-# Source0-md5:	9c6e9e4c35c4ec3a7664fcdd397eb7f0
+# Source0-md5:	0a969199c77a604a488794c56176000f
 Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
-# Source1-md5:	868d972aaba6577aa5e8873644d7c3fb
+# Source1-md5:	ab4f771bc522caa0a86317dc882679e8
 Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
-# Source2-md5:	74811bc9ef86f2d97b3b2ba2ba53f9d3
-Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}desktop-%{version}-%{_desktop_minor}.tar.gz
-# Source4-md5:	f96395297324ffe249fdec3065d754be
-Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}viewer-%{version}-%{_viewer_minor}.tar.gz
-# Source5-md5:	e9f5b692278025856b09bd71d0966100
-Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
-# Source7-md5:	29b0e8be069a8258f5b8774362fc7464
+# Source2-md5:	18519f2bcf30b10b766a60926fbe1017
+Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
+# Source3-md5:	ac31e8f2f112e3720f3c00cec67c0734
+Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{_comp_minor}.tar.gz
+# Source4-md5:	5ea64a557c770d9f5cc4b9a7a9d1343c
+Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{_compext_minor}.tar.gz
+# Source5-md5:	cd1296ebd24b1d7c4f82537a395ad6e8
+Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}compshad-%{version}-%{_compshad_minor}.tar.gz
+# Source6-md5:	6edfa4f65f579306f05af2451249c2bf
 Patch0:		%{name}-X11-libs.patch
 Patch1:		%{name}compext-libs.patch
 Patch2:		%{name}viewer.patch
 Patch3:		%{name}-gcc-4.1.patch
 Patch4:		%{name}-fonts.patch
-Patch5:	%{name}-system-nxcomp.patch
+Patch5:		%{name}-system-nxcomp.patch
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
@@ -40,18 +40,18 @@ BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	nxcomp-devel >= 2.0.0
+BuildRequires:	nxcompext-devel >= 2.0.0
 BuildRequires:	openssl-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
-BuildRequires:	nxcomp-devel >= 2.0.0
-BuildRequires:	nxcompext-devel >= 2.0.0
 BuildRequires:	xorg-cf-files
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-util-imake
 Requires:	xorg-font-font-cursor-misc
-Requires:	xorg-font-font-misc-misc-base
 Requires:	xorg-font-font-misc-misc
+Requires:	xorg-font-font-misc-misc-base
 Provides:	nx-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -65,65 +65,44 @@ NoMachine NX to schemat kompresji dla X nowej generacji. Działa na
 zdalnych sesjach X11 nawet przy prędkosci 56k albo większej.
 
 %prep
-%setup -q -c -a1 -a2 -a4 -a5 -a7
-%patch0 -p1
+%setup -q -c -a1 -a2 -a3 -a4 -a5 -a6
+#%patch0 -p1
 #%patch1
-%patch2 -p1
+#%patch2 -p1
 #%patch3 -p1
-%patch4 -p0
-%patch5 -p1
+#%patch4 -p0
+#%patch5 -p1
 
 %build
 export CFLAGS="%{rpmcflags} -fPIC"
 export CXXFLAGS="%{rpmcflags} -fPIC"
 export CPPFLAGS="%{rpmcflags} -fPIC"
 
-cd nx-X11
-%{__make} \
-	CC="%{__cc}" \
-	World
+perl -pi -e"s|CXXFLAGS=.-O.*|CXXFLAGS=\"$CXXFLAGS\"|" */configure
 
-cd ../nxdesktop
-./configure \
-	--prefix=%{_prefix} \
-	--exec-prefix=%{_prefix}
-sed -i -e "s|/usr/NX|%{_prefix}|" Makefile
-sed -i -e "s|-lX11|-lX11-nx|" Makefile
-sed -i -e "s|-lXext|-lXext -L/usr/X11R6/%{_lib}|" Makefile
-%{__make}
-
-cd ../nxviewer
-ln -s ../nx-X11/config config
-ln -s ../nx-X11/exports/ exports
-xmkmf -a .
-%{__make} \
-	EXTRA_LIBRARIES="-L%{_libdir} -L../nx-X11/exports/lib" \
-	CC="%{__cc}" \
-	World
-
-cd ../nxproxy
+# build Compression Library and Proxy
+for i in nxcomp nxproxy nxcompshad; do
+cd $i
 %configure
-%{__make} \
-	CC="%{__cc}"
+%{__make}
+cd ..
+done
+
+cd nx-X11
+%{__make} World
 
 %install
+
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_libdir}/pkgconfig,%{_bindir},%{_includedir}/nxcompsh}
 
 # X11
-install nx-X11/lib/X11/libX11-nx.so.* \
-	nx-X11/lib/Xext/libXext-nx.so.* \
-	nx-X11/lib/Xrender/libXrender-nx.so.* \
+install nx-X11/lib/X11/libX11.so \
+	nx-X11/lib/Xext/libXext.so \
+	nx-X11/lib/Xrender/libXrender.so \
 	$RPM_BUILD_ROOT%{_libdir}
 install nx-X11/programs/Xserver/nxagent $RPM_BUILD_ROOT%{_bindir}
 rm -f $RPM_BUILD_ROOT%{_libdir}/libX{11-nx.so.6,ext-nx.so.6,render-nx.so.1}
-
-# desktop
-install nxdesktop/nxdesktop $RPM_BUILD_ROOT%{_bindir}
-
-# viewer
-install nxviewer/nxviewer/nxviewer $RPM_BUILD_ROOT%{_bindir}
-install nxviewer/nxpasswd/nxpasswd $RPM_BUILD_ROOT%{_bindir}
 
 # proxy
 install nxproxy/nxproxy $RPM_BUILD_ROOT%{_bindir}
@@ -137,4 +116,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.so.*
+%attr(755,root,root) %{_libdir}/*.so
