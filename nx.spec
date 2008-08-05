@@ -9,7 +9,7 @@ Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.2.0
-Release:	1
+Release:	1.1
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
@@ -88,8 +88,16 @@ cd $i
 cd ..
 done
 
+# build X11 Support Libraries and Agents
+
 cd nx-X11
 %{__make} World
+cd ..
+
+# build Extended Compression Library
+cd nxcompext
+%configure
+%{__make}
 
 %install
 
@@ -104,6 +112,11 @@ install nx-X11/lib/X11/libX11.so \
 install nx-X11/programs/Xserver/nxagent $RPM_BUILD_ROOT%{_bindir}
 rm -f $RPM_BUILD_ROOT%{_libdir}/libX{11-nx.so.6,ext-nx.so.6,render-nx.so.1}
 
+# install Compression Libraries and Proxy
+cp -a nxcomp/libXcomp.so.* $RPM_BUILD_ROOT%{_libdir}
+cp -a nxcompext/libXcompext.so.* $RPM_BUILD_ROOT%{_libdir}
+cp -a nxcompshad/libXcompshad.so.* $RPM_BUILD_ROOT%{_libdir}
+
 # proxy
 install nxproxy/nxproxy $RPM_BUILD_ROOT%{_bindir}
 
@@ -117,3 +130,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/*.so
+%attr(755,root,root) %{_libdir}/*.so.*
