@@ -40,8 +40,6 @@ BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	nxcomp-devel >= 2.0.0
-BuildRequires:	nxcompext-devel >= 2.0.0
 BuildRequires:	openssl-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
