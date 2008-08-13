@@ -4,6 +4,7 @@
 %define		_compext_minor	1
 %define	 	_compshad_minor	3
 %define		_proxy_minor	1
+%define		_win_minor	4
 %define		_X11_minor	2
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
@@ -27,12 +28,8 @@ Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%
 # Source5-md5:	cd1296ebd24b1d7c4f82537a395ad6e8
 Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}compshad-%{version}-%{_compshad_minor}.tar.gz
 # Source6-md5:	6edfa4f65f579306f05af2451249c2bf
-Patch0:		%{name}-X11-libs.patch
-Patch1:		%{name}compext-libs.patch
-Patch2:		%{name}viewer.patch
-Patch3:		%{name}-gcc-4.1.patch
-Patch4:		%{name}-fonts.patch
-Patch5:		%{name}-system-nxcomp.patch
+Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}win-%{version}-%{_compshad_minor}.tar.gz
+# Source7-md5:	30ee1c2ae1c1a46bb130e84ae4646a42
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
@@ -66,13 +63,7 @@ NoMachine NX to schemat kompresji dla X nowej generacji. Działa na
 zdalnych sesjach X11 nawet przy prędkosci 56k albo większej.
 
 %prep
-%setup -q -c -a1 -a2 -a3 -a4 -a5 -a6
-#%patch0 -p1
-#%patch1
-#%patch2 -p1
-#%patch3 -p1
-#%patch4 -p0
-#%patch5 -p1
+%setup -q -c -a1 -a2 -a3 -a4 -a5 -a6 -a7
 
 %build
 export CFLAGS="%{rpmcflags} -fPIC"
@@ -111,12 +102,12 @@ install nx-X11/lib/X11/libX11.so \
 	nx-X11/lib/Xrender/libXrender.so \
 	$RPM_BUILD_ROOT%{_libdir}
 install nx-X11/programs/Xserver/nxagent $RPM_BUILD_ROOT%{_bindir}
-rm -f $RPM_BUILD_ROOT%{_libdir}/libX{11-nx.so.6,ext-nx.so.6,render-nx.so.1}
+#rm -f $RPM_BUILD_ROOT%{_libdir}/libX{11-nx.so.6,ext-nx.so.6,render-nx.so.1}
 
 # install Compression Libraries and Proxy
-cp -a nxcomp/libXcomp.so.* $RPM_BUILD_ROOT%{_libdir}
-cp -a nxcompext/libXcompext.so.* $RPM_BUILD_ROOT%{_libdir}
-cp -a nxcompshad/libXcompshad.so.* $RPM_BUILD_ROOT%{_libdir}
+install nxcomp/libXcomp.so.* $RPM_BUILD_ROOT%{_libdir}
+install nxcompext/libXcompext.so.* $RPM_BUILD_ROOT%{_libdir}
+install nxcompshad/libXcompshad.so.* $RPM_BUILD_ROOT%{_libdir}
 
 # proxy
 install nxproxy/nxproxy $RPM_BUILD_ROOT%{_bindir}
