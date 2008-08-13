@@ -47,6 +47,9 @@ BuildRequires:	xorg-cf-files
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-util-imake
+Requires:	nxcomp >= %{version}.%{_comp_minor}
+Requires:	nxcompext >= %{version}.%{_compext_minor}
+Requires:	nxcompshad >= %{version}.%{_compshad_minor}
 Requires:	xorg-font-font-cursor-misc
 Requires:	xorg-font-font-misc-misc
 Requires:	xorg-font-font-misc-misc-base
