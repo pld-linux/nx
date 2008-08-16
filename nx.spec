@@ -97,12 +97,10 @@ cd nxcompext
 %install
 
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir}/pkgconfig,%{_bindir}}
+install -d $RPM_BUILD_ROOT{%{_libdir}/{pkgconfig,NX},%{_bindir}}
 
 # X11
-install nx-X11/lib/X11/libX11.so.6.2 $RPM_BUILD_ROOT%{_libdir}/libX11-nx.so.6.2
-install nx-X11/lib/Xext/libXext.so.6.4 $RPM_BUILD_ROOT%{_libdir}/libXext-nx.so.6.4
-install nx-X11/lib/Xrender/libXrender.so.1.2.2 $RPM_BUILD_ROOT%{_libdir}/libXrender-nx.so.1.2.2
+install nx-X11/lib/X11/libX11.so.6.2 nx-X11/lib/Xext/libXext.so.6.4 nx-X11/lib/Xrender/libXrender.so.1.2.2 $RPM_BUILD_ROOT%{_libdir}/NX
 install nx-X11/programs/Xserver/nxagent $RPM_BUILD_ROOT%{_bindir}
 
 # proxy
@@ -111,10 +109,14 @@ install nxproxy/nxproxy $RPM_BUILD_ROOT%{_bindir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post
+/sbin/ldconfig %{_libdir}/NX
+
+%postun	
+/sbin/ldconfig %{_libdir}/NX
 
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.so.*
+%dir %{_libdir}/NX
+%attr(755,root,root) %{_libdir}/NX/*.so.*
