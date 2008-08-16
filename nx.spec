@@ -43,6 +43,9 @@ BuildRequires:	which
 BuildRequires:	xorg-cf-files
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXt-devel
+BuildRequires:	xorg-lib-libXdamage-devel
+BuildRequires:	xorg-lib-libXrandr-devel
+BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-util-imake
 Requires:	nxcomp >= %{version}.%{_comp_minor}
 Requires:	nxcompext >= %{version}.%{_compext_minor}
@@ -94,20 +97,13 @@ cd nxcompext
 %install
 
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir}/pkgconfig,%{_bindir},%{_includedir}/nxcompsh}
+install -d $RPM_BUILD_ROOT{%{_libdir}/pkgconfig,%{_bindir}}
 
 # X11
-install nx-X11/lib/X11/libX11.so \
-	nx-X11/lib/Xext/libXext.so \
-	nx-X11/lib/Xrender/libXrender.so \
-	$RPM_BUILD_ROOT%{_libdir}
+install nx-X11/lib/X11/libX11.so.6.2 $RPM_BUILD_ROOT%{_libdir}/libX11-nx.so.6.2
+install nx-X11/lib/Xext/libXext.so.6.4 $RPM_BUILD_ROOT%{_libdir}/libXext-nx.so.6.4
+install nx-X11/lib/Xrender/libXrender.so.1.2.2 $RPM_BUILD_ROOT%{_libdir}/libXrender-nx.so.1.2.2
 install nx-X11/programs/Xserver/nxagent $RPM_BUILD_ROOT%{_bindir}
-#rm -f $RPM_BUILD_ROOT%{_libdir}/libX{11-nx.so.6,ext-nx.so.6,render-nx.so.1}
-
-# install Compression Libraries and Proxy
-install nxcomp/libXcomp.so.* $RPM_BUILD_ROOT%{_libdir}
-install nxcompext/libXcompext.so.* $RPM_BUILD_ROOT%{_libdir}
-install nxcompshad/libXcompshad.so.* $RPM_BUILD_ROOT%{_libdir}
 
 # proxy
 install nxproxy/nxproxy $RPM_BUILD_ROOT%{_bindir}
@@ -121,5 +117,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.so
 %attr(755,root,root) %{_libdir}/*.so.*
