@@ -1,4 +1,4 @@
-%define		_agent_minor	8
+%define		_agent_minor	10
 %define		_auth_minor	1
 %define		_comp_minor	7
 %define		_compext_minor	1
@@ -10,14 +10,14 @@ Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.2.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
-#SourceDownload: http://www.nomachine.com/download/snapshot/nxsources/
+#SourceDownload: http://www.nomachine.com/sources.php
 Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
 # Source0-md5:	0a969199c77a604a488794c56176000f
 Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
-# Source1-md5:	ab4f771bc522caa0a86317dc882679e8
+# Source1-md5:	9123c0bbd184cdeb343c7c6f1e267161
 Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
 # Source2-md5:	18519f2bcf30b10b766a60926fbe1017
 Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
@@ -42,9 +42,9 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	which
 BuildRequires:	xorg-cf-files
 BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXrandr-devel
+BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-util-imake
 Requires:	nxcomp >= %{version}.%{_comp_minor}
@@ -112,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig %{_libdir}/NX
 
-%postun	
+%postun
 /sbin/ldconfig %{_libdir}/NX
 
 %files
