@@ -1,3 +1,7 @@
+# TODO
+# - this is bad?
+#  "libX11.so.6()(64bit)" is provided by following packages:
+#  a) nx-3.2.0-3.x86_64
 %define		_agent_minor	10
 %define		_auth_minor	1
 %define		_comp_minor	7
