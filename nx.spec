@@ -1,7 +1,5 @@
 # TODO
-# - this is bad?
-#  "libX11.so.6()(64bit)" is provided by following packages:
-#  a) nx-3.2.0-3.x86_64
+# - the x11 libraires packaged to %{_libdir}/NX aren't used, still links (without rpath) to system xorg libs
 %define		_agent_minor	10
 %define		_auth_minor	1
 %define		_comp_minor	7
@@ -14,7 +12,7 @@ Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.2.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
@@ -60,6 +58,12 @@ Requires:	xorg-font-font-misc-misc-base
 Provides:	nx-X11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# don't satisfy xorg deps for the rest of the distro
+%define		_noautoprovfiles	%{_libdir}/NX
+
+# and as we don't provide them, don't require either
+%define		_noautoreq libX11.so libXext.so libXrender.so
+
 %description
 NoMachine NX is the next-generation X compression and roundtrip
 suppression scheme. It can operate remote X11 sessions over 56k modem
@@ -81,17 +85,15 @@ perl -pi -e"s|CXXFLAGS=.-O.*|CXXFLAGS=\"$CXXFLAGS\"|" */configure
 
 # build Compression Library and Proxy
 for i in nxcomp nxproxy nxcompshad; do
-cd $i
-%configure
-%{__make}
-cd ..
+	cd $i
+	%configure
+	%{__make}
+	cd ..
 done
 
 # build X11 Support Libraries and Agents
 
-cd nx-X11
-%{__make} World
-cd ..
+%{__make} -C nx-X11 World
 
 # build Extended Compression Library
 cd nxcompext
@@ -99,7 +101,6 @@ cd nxcompext
 %{__make}
 
 %install
-
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_libdir}/{pkgconfig,NX},%{_bindir}}
 
