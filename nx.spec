@@ -1,37 +1,37 @@
 # TODO
 # - the x11 libraires packaged to %{_libdir}/NX aren't used, still links (without rpath) to system xorg libs
-%define		_agent_minor	10
+%define		_agent_minor	6
 %define		_auth_minor	1
-%define		_comp_minor	7
-%define		_compext_minor	1
-%define	 	_compshad_minor	3
-%define		_proxy_minor	1
-%define		_win_minor	4
-%define		_X11_minor	2
+%define		_comp_minor	3
+%define		_compext_minor	2
+%define	 	_compshad_minor	2
+%define		_proxy_minor	2
+%define		_win_minor	2
+%define		_X11_minor	3
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
-Version:	3.2.0
-Release:	4
+Version:	3.3.0
+Release:	1
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
 Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
-# Source0-md5:	0a969199c77a604a488794c56176000f
+# Source0-md5:	3574af5e07e7ec7ef66d14feffe9c0cd
 Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
-# Source1-md5:	9123c0bbd184cdeb343c7c6f1e267161
+# Source1-md5:	7ae3b80abe66fc3adc05247213451a5a
 Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
-# Source2-md5:	18519f2bcf30b10b766a60926fbe1017
+# Source2-md5:	6d59de2cbf61430ac513ddfa6b05bc76
 Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
-# Source3-md5:	ac31e8f2f112e3720f3c00cec67c0734
+# Source3-md5:	047206e5a811b915aac4ae09bddef207
 Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{_comp_minor}.tar.gz
-# Source4-md5:	5ea64a557c770d9f5cc4b9a7a9d1343c
+# Source4-md5:	2327cca8e6116fd6a96345566336d81d
 Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{_compext_minor}.tar.gz
-# Source5-md5:	cd1296ebd24b1d7c4f82537a395ad6e8
+# Source5-md5:	ca468d15add75d4b63d1f0f64919eb72
 Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}compshad-%{version}-%{_compshad_minor}.tar.gz
-# Source6-md5:	6edfa4f65f579306f05af2451249c2bf
+# Source6-md5:	d242b9b7cbc8ea5f2757390bd5e23420
 Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}win-%{version}-%{_compshad_minor}.tar.gz
-# Source7-md5:	30ee1c2ae1c1a46bb130e84ae4646a42
+# Source7-md5:	71de8e60c0cdee887e00d1a44f337ad1
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
