@@ -1,13 +1,14 @@
 # TODO
 # - the x11 libraires packaged to %{_libdir}/NX aren't used, still links (without rpath) to system xorg libs
-%define		_agent_minor	10
-%define		_auth_minor	1
-%define		_comp_minor	3
-%define		_compext_minor	3
-%define	 	_compshad_minor	3
-%define		_proxy_minor	2
-%define		_win_minor	2
-%define		_X11_minor	5
+#   so get rid of the copies or make link with them!
+%define		agent_minor	10
+%define		auth_minor	1
+%define		comp_minor	3
+%define		compext_minor	3
+%define	 	compshad_minor	3
+%define		proxy_minor	2
+%define		win_minor	2
+%define		X11_minor	5
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
@@ -16,21 +17,21 @@ Release:	2
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
-Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{_X11_minor}.tar.gz
+Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{X11_minor}.tar.gz
 # Source0-md5:	6dae2fddc8081d30530f68e806105fd7
-Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{_agent_minor}.tar.gz
+Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{agent_minor}.tar.gz
 # Source1-md5:	7abd7812428aebcc48b996bcb5f1970b
-Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{_auth_minor}.tar.gz
+Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{auth_minor}.tar.gz
 # Source2-md5:	6d59de2cbf61430ac513ddfa6b05bc76
-Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{_proxy_minor}.tar.gz
+Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{proxy_minor}.tar.gz
 # Source3-md5:	047206e5a811b915aac4ae09bddef207
-Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{_comp_minor}.tar.gz
+Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{comp_minor}.tar.gz
 # Source4-md5:	2327cca8e6116fd6a96345566336d81d
-Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{_compext_minor}.tar.gz
+Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{compext_minor}.tar.gz
 # Source5-md5:	f138420fc7a005495675146a1e1539f2
-Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}compshad-%{version}-%{_compshad_minor}.tar.gz
+Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}compshad-%{version}-%{compshad_minor}.tar.gz
 # Source6-md5:	02f051366c4aae96bfefda60d701d8b4
-Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}win-%{version}-%{_win_minor}.tar.gz
+Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}win-%{version}-%{win_minor}.tar.gz
 # Source7-md5:	71de8e60c0cdee887e00d1a44f337ad1
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
@@ -49,9 +50,9 @@ BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-util-imake
-Requires:	nxcomp >= %{version}.%{_comp_minor}
-Requires:	nxcompext >= %{version}.%{_compext_minor}
-Requires:	nxcompshad >= %{version}.%{_compshad_minor}
+Requires:	nxcomp >= %{version}.%{comp_minor}
+Requires:	nxcompext >= %{version}.%{compext_minor}
+Requires:	nxcompshad >= %{version}.%{compshad_minor}
 Requires:	xorg-font-font-cursor-misc
 Requires:	xorg-font-font-misc-misc
 Requires:	xorg-font-font-misc-misc-base
