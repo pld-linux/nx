@@ -13,7 +13,7 @@ Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.3.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
