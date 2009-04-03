@@ -1,34 +1,34 @@
 # TODO
 # - the x11 libraires packaged to %{_libdir}/NX aren't used, still links (without rpath) to system xorg libs
 #   so get rid of the copies or make link with them!
-%define		agent_minor	10
+%define		agent_minor	13
 %define		auth_minor	1
-%define		comp_minor	3
-%define		compext_minor	3
+%define		comp_minor	4
+%define		compext_minor	4
 %define	 	compshad_minor	3
 %define		proxy_minor	2
 %define		win_minor	2
-%define		X11_minor	5
+%define		X11_minor	6
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.3.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
 Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{X11_minor}.tar.gz
-# Source0-md5:	6dae2fddc8081d30530f68e806105fd7
+# Source0-md5:	954de7b8a3d1e6cd24bdc96db2857f1b
 Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{agent_minor}.tar.gz
-# Source1-md5:	7abd7812428aebcc48b996bcb5f1970b
+# Source1-md5:	052091391a7340007db764025f36750a
 Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{auth_minor}.tar.gz
 # Source2-md5:	6d59de2cbf61430ac513ddfa6b05bc76
 Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{proxy_minor}.tar.gz
 # Source3-md5:	047206e5a811b915aac4ae09bddef207
 Source4:	http://web04.nomachine.com/download/%{version}/sources/%{name}comp-%{version}-%{comp_minor}.tar.gz
-# Source4-md5:	2327cca8e6116fd6a96345566336d81d
+# Source4-md5:	0eb3866f1173767f185a1d62dd51dba0
 Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%{version}-%{compext_minor}.tar.gz
-# Source5-md5:	f138420fc7a005495675146a1e1539f2
+# Source5-md5:	421398e9f8878a9956aebbf9452ec40a
 Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}compshad-%{version}-%{compshad_minor}.tar.gz
 # Source6-md5:	02f051366c4aae96bfefda60d701d8b4
 Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}win-%{version}-%{win_minor}.tar.gz
