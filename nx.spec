@@ -1,26 +1,26 @@
 # TODO
 # - the x11 libraires packaged to %{_libdir}/NX aren't used, still links (without rpath) to system xorg libs
 #   so get rid of the copies or make link with them!
-%define		agent_minor	9
+%define		agent_minor	11
 %define		auth_minor	3
 %define		comp_minor	7
 %define		compext_minor	1
 %define	 	compshad_minor	3
 %define		proxy_minor	2
-%define		win_minor	5
-%define		X11_minor	3
+%define		win_minor	7
+%define		X11_minor	4
 Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.4.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
 Source0:	http://web04.nomachine.com/download/%{version}/sources/%{name}-X11-%{version}-%{X11_minor}.tar.gz
-# Source0-md5:	55630b5e20d360e977c8f7734fae1733
+# Source0-md5:	38a84d4521a41e5ff988a84181ddcaf5
 Source1:	http://web04.nomachine.com/download/%{version}/sources/%{name}agent-%{version}-%{agent_minor}.tar.gz
-# Source1-md5:	4b59e373bf86788bd496abe2681d38a5
+# Source1-md5:	1ede9d6a7f2782c18d489ac089c5b885
 Source2:	http://web04.nomachine.com/download/%{version}/sources/%{name}auth-%{version}-%{auth_minor}.tar.gz
 # Source2-md5:	bfb758edd51271b31aa6b902557fa0cc
 Source3:	http://web04.nomachine.com/download/%{version}/sources/%{name}proxy-%{version}-%{proxy_minor}.tar.gz
@@ -32,7 +32,7 @@ Source5:	http://web04.nomachine.com/download/%{version}/sources/%{name}compext-%
 Source6:	http://web04.nomachine.com/download/%{version}/sources/%{name}compshad-%{version}-%{compshad_minor}.tar.gz
 # Source6-md5:	15deba68e12e13b524a723b49e7ec813
 Source7:	http://web04.nomachine.com/download/%{version}/sources/%{name}win-%{version}-%{win_minor}.tar.gz
-# Source7-md5:	88538694d4a0dce157bec0dd8da9f9d3
+# Source7-md5:	f45d183360067ede979c18fc964824ab
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
