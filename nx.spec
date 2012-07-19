@@ -14,7 +14,7 @@ Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.5.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
@@ -56,9 +56,6 @@ BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-util-imake
-Requires:	nxcomp >= %{version}.%{comp_minor}
-Requires:	nxcompext >= %{version}.%{compext_minor}
-Requires:	nxcompshad >= %{version}.%{compshad_minor}
 Requires:	xorg-font-font-cursor-misc
 Requires:	xorg-font-font-misc-misc
 Requires:	xorg-font-font-misc-misc-base
