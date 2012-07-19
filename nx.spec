@@ -189,6 +189,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc nxscripts/*
 %attr(755,root,root) %{_bindir}/nxagent
 %attr(755,root,root) %{_bindir}/nxauth
 %attr(755,root,root) %{_bindir}/nxproxy
