@@ -14,7 +14,7 @@ Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.5.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
@@ -75,9 +75,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # so check gets really confused in here
 %define		no_install_post_check_so	1
-
-# we want rpath as we explicitely set it
-%define		no_install_post_chrpath		1
 
 %description
 NoMachine NX is the next-generation X compression and roundtrip
