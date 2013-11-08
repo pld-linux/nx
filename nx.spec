@@ -5,7 +5,7 @@
 %define		auth_minor	1
 %define		comp_minor	2
 %define		compext_minor	1
-%define	 	compshad_minor	2
+%define		compshad_minor	2
 %define		proxy_minor	1
 %define		X11_minor	2
 %define		scripts_minor	1
@@ -14,7 +14,7 @@ Summary:	NoMachine NX is the next-generation X compression scheme
 Summary(pl.UTF-8):	NoMachine NX to schemat kompresji nowej generacji dla X
 Name:		nx
 Version:	3.5.0
-Release:	5
+Release:	6
 License:	GPL
 Group:		Libraries
 #SourceDownload: http://www.nomachine.com/sources.php
@@ -39,6 +39,7 @@ Source8:	http://64.34.173.142/download/%{version}/sources/%{name}ssh-%{version}-
 Patch0:		nx-optflags.patch
 Patch1:		nx-syslibs.patch
 Patch2:		nx-libpng15.patch
+Patch3:		format-security.patch
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
@@ -90,6 +91,7 @@ zdalnych sesjach X11 nawet przy prędkosci 56k albo większej.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
+%patch3 -p1
 
 cat <<EOF >>nx-X11/config/cf/host.def
 #define UseRpath YES

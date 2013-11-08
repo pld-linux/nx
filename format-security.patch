@@ -1,0 +1,186 @@
+--- nx-3.5.0/nx-X11/config/imake/imake.c~	2005-11-08 07:33:24.000000000 +0100
++++ nx-3.5.0/nx-X11/config/imake/imake.c	2013-11-08 18:32:50.263316984 +0100
+@@ -1015,7 +1015,7 @@
+     abort ();
+ 
+   while (fgets (command, len, fp))
+-    fprintf (inFile, command);
++    fprintf (inFile, "%s", command);
+ 
+   len = pclose (fp);
+   remove (aout);
+--- nx-3.5.0/nx-X11/extras/rman/rman.c~	2004-04-23 20:42:56.000000000 +0200
++++ nx-3.5.0/nx-X11/extras/rman/rman.c	2013-11-08 18:34:28.523316273 +0100
+@@ -1432,7 +1432,7 @@
+ 		break;
+ 	   case BEGINSECTION:	break;
+ 	   case ENDSECTION:
+-		if (sectheadid==NAME && message!=NULL) printf(message);
++		if (sectheadid==NAME && message!=NULL) printf("%s", message);
+ 		break;
+ 	   case BEGINSUBSECTION:	break;
+ 	   case ENDSUBSECTION:	break;
+--- nx-3.5.0/nx-X11/lib/xtrans/Xtransint.h~	2005-11-08 07:33:26.000000000 +0100
++++ nx-3.5.0/nx-X11/lib/xtrans/Xtransint.h	2013-11-08 18:40:51.059980171 +0100
+@@ -453,7 +453,7 @@
+ 			int hack= 0, saveerrno=errno; \
+                         struct timeval tp;\
+                         gettimeofday(&tp,0); \
+-			fprintf(stderr, __xtransname); fflush(stderr); \
++			fprintf(stderr, "%s", __xtransname); fflush(stderr); \
+ 			fprintf(stderr, x+hack,a,b,c); fflush(stderr); \
+                         fprintf(stderr, "timestamp (ms): %d\n",tp.tv_sec*1000+tp.tv_usec/1000); \
+                         fflush(stderr); \
+@@ -472,7 +472,7 @@
+ #else
+ #define PRMSG(lvl,x,a,b,c)	if (lvl <= XTRANSDEBUG){ \
+ 			int hack= 0, saveerrno=errno; \
+-			fprintf(stderr, __xtransname); fflush(stderr); \
++			fprintf(stderr, "%s", __xtransname); fflush(stderr); \
+ 			fprintf(stderr, x+hack,a,b,c); fflush(stderr); \
+ 			errno=saveerrno; \
+ 			} else ((void)0)
+--- nx-3.5.0/nx-X11/lib/Xaw/DisplayList.c~	2005-05-23 23:47:37.000000000 +0200
++++ nx-3.5.0/nx-X11/lib/Xaw/DisplayList.c	2013-11-08 18:44:15.089978694 +0100
+@@ -293,7 +293,7 @@
+ 	}
+       if (fp)
+ 	{
+-	  XmuSnprintf(cname, fp - fname + 1, fname);
++	  XmuSnprintf(cname, fp - fname + 1, "%s", fname);
+ 	  memmove(fname, fp + 1, strlen(fp));
+ 	  lc = cname[0] ? XawGetDisplayListClass(cname) : xlibc;
+ 	  if (!lc)
+--- nx-3.5.0/nx-X11/programs/Xserver/os/log.c~	2011-05-09 15:20:24.000000000 +0200
++++ nx-3.5.0/nx-X11/programs/Xserver/os/log.c	2013-11-08 18:47:45.913310500 +0100
+@@ -692,9 +692,9 @@
+ 	    return;
+ 	sprintf(err, "%s: ", str);
+ 	strcat(err, strerror(saveErrno));
+-	LogWrite(-1, err);
++	LogWrite(-1, "%s", err);
+     } else
+-	LogWrite(-1, strerror(saveErrno));
++	LogWrite(-1, "%s", strerror(saveErrno));
+ }
+ 
+ void
+--- nx-3.5.0/nx-X11/lib/xtrans/Xtransint.h~	2013-11-08 18:40:51.000000000 +0100
++++ nx-3.5.0/nx-X11/lib/xtrans/Xtransint.h	2013-11-08 18:55:24.129973851 +0100
+@@ -443,7 +443,7 @@
+ 			int hack= 0, saveerrno=errno; \
+                         struct timeval tp;\
+                         gettimeofday(&tp,0); \
+-			ErrorF(__xtransname); \
++			ErrorF("%s", __xtransname); \
+ 			ErrorF(x+hack,a,b,c); \
+                         ErrorF("timestamp (ms): %d\n",tp.tv_sec*1000+tp.tv_usec/1000); \
+ 			errno=saveerrno; \
+@@ -465,7 +465,7 @@
+ /* Use ErrorF() for the X server */
+ #define PRMSG(lvl,x,a,b,c)	if (lvl <= XTRANSDEBUG){ \
+ 			int hack= 0, saveerrno=errno; \
+-			ErrorF(__xtransname); \
++			ErrorF("%s", __xtransname); \
+ 			ErrorF(x+hack,a,b,c); \
+ 			errno=saveerrno; \
+ 			} else ((void)0)
+--- nx-3.5.0/nx-X11/programs/Xserver/GL/glx/glximports.c~	2005-07-03 09:01:02.000000000 +0200
++++ nx-3.5.0/nx-X11/programs/Xserver/GL/glx/glximports.c	2013-11-08 19:01:20.652459602 +0100
+@@ -110,12 +110,12 @@
+ 
+ void __glXImpWarning(__GLcontext *gc, char *msg)
+ {
+-    ErrorF((char *)msg);
++    ErrorF("%s", (char *)msg);
+ }
+ 
+ void __glXImpFatal(__GLcontext *gc, char *msg)
+ {
+-    ErrorF((char *)msg);
++    ErrorF("%s", (char *)msg);
+     __glXAbort();
+ }
+ 
+--- nx-3.5.0/nx-X11/programs/Xserver/hw/nxagent/Init.c~	2012-05-17 12:11:56.000000000 +0200
++++ nx-3.5.0/nx-X11/programs/Xserver/hw/nxagent/Init.c	2013-11-08 19:20:47.895659486 +0100
+@@ -481,7 +481,7 @@
+ 
+     nxagentStartRedirectToClientsLog();
+ 
+-    fprintf(stderr, buffer);
++    fprintf(stderr, "%s", buffer);
+ 
+     nxagentEndRedirectToClientsLog();
+   }
+--- nx-3.5.0/nx-X11/programs/Xserver/hw/nxagent/Error.c~	2010-10-22 16:04:23.000000000 +0200
++++ nx-3.5.0/nx-X11/programs/Xserver/hw/nxagent/Error.c	2013-11-08 19:29:02.638989238 +0100
+@@ -232,7 +232,7 @@
+ 
+ int nxagentExitHandler(const char *message)
+ {
+-  FatalError(message);
++  FatalError("%s", message);
+ 
+   return 0;
+ }
+--- nx-3.5.0/nx-X11/programs/nxauth/process.c~	2010-03-30 15:33:13.000000000 +0200
++++ nx-3.5.0/nx-X11/programs/nxauth/process.c	2013-11-08 19:34:07.735653696 +0100
+@@ -974,7 +974,7 @@
+     char *hex;
+ 
+     hex = bintohex(len, cp);
+-    fprintf(fp, hex);
++    fprintf(fp, "%s", hex);
+     free(hex);
+ }
+ 
+--- nx-3.5.0/nxssh/readpass.c~	2007-09-12 13:30:54.000000000 +0200
++++ nx-3.5.0/nxssh/readpass.c	2013-11-08 19:40:40.012317523 +0100
+@@ -173,7 +173,7 @@
+         {
+                 size_t len;
+                 int  retr;
+-                fprintf(stdout, prompt);
++                fprintf(stdout, "%s", prompt);
+                 fflush(stdout);
+ 
+                 len = retr = 0;
+--- nx-3.5.0/nxssh/proxy.c~	2007-12-20 13:05:58.000000000 +0100
++++ nx-3.5.0/nxssh/proxy.c	2013-11-08 19:47:26.292314582 +0100
+@@ -2199,7 +2199,7 @@
+                         line[l]     = '\\';
+                         line[l + 1] = '\0';
+ 
+-                        debug(line);
++                        debug("%s", line);
+ 
+                         l = 0;
+                 }
+@@ -2209,7 +2209,7 @@
+ 
+         if (line[0] != '\0')
+         {
+-            debug(line);
++            debug("%s", line);
+         }
+ 
+         debug("---");
+@@ -2239,7 +2239,7 @@
+                         line[l]     = '\\';
+                         line[l + 1] = '\0';
+ 
+-                        debug(line);
++                        debug("%s", line);
+ 
+                         l = 0;
+                 }
+@@ -2249,7 +2249,7 @@
+ 
+         if (line[0] != '\0')
+         {
+-            debug(line);
++            debug("%s", line);
+         }
+ 
+         debug("---");
