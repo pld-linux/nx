@@ -40,6 +40,7 @@ Patch0:		nx-optflags.patch
 Patch1:		nx-syslibs.patch
 Patch2:		nx-libpng15.patch
 Patch3:		format-security.patch
+Patch4:		openssl.patch
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
@@ -92,6 +93,7 @@ zdalnych sesjach X11 nawet przy prędkosci 56k albo większej.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
 
 cat <<EOF >>nx-X11/config/cf/host.def
 #define UseRpath YES
@@ -105,6 +107,11 @@ export CPPFLAGS="%{rpmcflags} -fPIC -DPIC"
 export LDFLAGS="%{rpmldflags} -Wl,-rpath,%{_libdir}/NX"
 
 perl -pi -e"s|CXXFLAGS=.-O.*|CXXFLAGS=\"$CXXFLAGS\"|" */configure
+
+cd nxssh
+%{__aclocal}
+%{__autoconf}
+cd ..
 
 # build Compression Library and Proxy
 for i in nxcomp nxcompshad nxproxy; do
