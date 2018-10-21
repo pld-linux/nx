@@ -41,6 +41,7 @@ Patch1:		nx-syslibs.patch
 Patch2:		nx-libpng15.patch
 Patch3:		format-security.patch
 Patch4:		openssl.patch
+Patch5:		openssl-1.1.1.patch
 URL:		http://www.nomachine.com/
 #BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
@@ -94,6 +95,7 @@ zdalnych sesjach X11 nawet przy prędkosci 56k albo większej.
 %patch2 -p0
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 cat <<EOF >>nx-X11/config/cf/host.def
 #define UseRpath YES

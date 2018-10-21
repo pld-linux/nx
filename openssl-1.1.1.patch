@@ -1,0 +1,210 @@
+diff -ur nx-3.5.0/nxssh/authfd.c nx-3.5.0-openssl111/nxssh/authfd.c
+--- nx-3.5.0/nxssh/authfd.c	2006-09-01 07:38:36.000000000 +0200
++++ nx-3.5.0-openssl111/nxssh/authfd.c	2018-10-21 14:58:30.300117373 +0200
+@@ -330,13 +330,13 @@
+ 	case 1:
+ 		key = key_new(KEY_RSA1);
+ 		bits = buffer_get_int(&auth->identities);
+-		buffer_get_bignum(&auth->identities, key->rsa->e);
+-		buffer_get_bignum(&auth->identities, key->rsa->n);
++		buffer_get_bignum(&auth->identities, RSA_get0_e(key->rsa));
++		buffer_get_bignum(&auth->identities, RSA_get0_n(key->rsa));
+ 		*comment = buffer_get_string(&auth->identities, NULL);
+-		keybits = BN_num_bits(key->rsa->n);
++		keybits = BN_num_bits(RSA_get0_n(key->rsa));
+ 		if (keybits < 0 || bits != (u_int)keybits)
+ 			logit("Warning: identity keysize mismatch: actual %d, announced %u",
+-			    BN_num_bits(key->rsa->n), bits);
++			    BN_num_bits(RSA_get0_n(key->rsa)), bits);
+ 		break;
+ 	case 2:
+ 		blob = buffer_get_string(&auth->identities, &blen);
+@@ -380,9 +380,9 @@
+ 	}
+ 	buffer_init(&buffer);
+ 	buffer_put_char(&buffer, SSH_AGENTC_RSA_CHALLENGE);
+-	buffer_put_int(&buffer, BN_num_bits(key->rsa->n));
+-	buffer_put_bignum(&buffer, key->rsa->e);
+-	buffer_put_bignum(&buffer, key->rsa->n);
++	buffer_put_int(&buffer, BN_num_bits(RSA_get0_n(key->rsa)));
++	buffer_put_bignum(&buffer, RSA_get0_e(key->rsa));
++	buffer_put_bignum(&buffer, RSA_get0_n(key->rsa));
+ 	buffer_put_bignum(&buffer, challenge);
+ 	buffer_append(&buffer, session_id, 16);
+ 	buffer_put_int(&buffer, response_type);
+@@ -459,14 +459,14 @@
+ static void
+ ssh_encode_identity_rsa1(Buffer *b, RSA *key, const char *comment)
+ {
+-	buffer_put_int(b, BN_num_bits(key->n));
+-	buffer_put_bignum(b, key->n);
+-	buffer_put_bignum(b, key->e);
+-	buffer_put_bignum(b, key->d);
++	buffer_put_int(b, BN_num_bits(RSA_get0_n(key)));
++	buffer_put_bignum(b, RSA_get0_n(key));
++	buffer_put_bignum(b, RSA_get0_e(key));
++	buffer_put_bignum(b, RSA_get0_d(key));
+ 	/* To keep within the protocol: p < q for ssh. in SSL p > q */
+-	buffer_put_bignum(b, key->iqmp);	/* ssh key->u */
+-	buffer_put_bignum(b, key->q);	/* ssh key->p, SSL key->q */
+-	buffer_put_bignum(b, key->p);	/* ssh key->q, SSL key->p */
++	buffer_put_bignum(b, RSA_get0_iqmp(key));	/* ssh key->u */
++	buffer_put_bignum(b, RSA_get0_q(key));	/* ssh key->p, SSL key->q */
++	buffer_put_bignum(b, RSA_get0_p(key));	/* ssh key->q, SSL key->p */
+ 	buffer_put_cstring(b, comment);
+ }
+ 
+@@ -476,19 +476,19 @@
+ 	buffer_put_cstring(b, key_ssh_name(key));
+ 	switch (key->type) {
+ 	case KEY_RSA:
+-		buffer_put_bignum2(b, key->rsa->n);
+-		buffer_put_bignum2(b, key->rsa->e);
+-		buffer_put_bignum2(b, key->rsa->d);
+-		buffer_put_bignum2(b, key->rsa->iqmp);
+-		buffer_put_bignum2(b, key->rsa->p);
+-		buffer_put_bignum2(b, key->rsa->q);
++		buffer_put_bignum2(b, RSA_get0_n(key->rsa));
++		buffer_put_bignum2(b, RSA_get0_e(key->rsa));
++		buffer_put_bignum2(b, RSA_get0_d(key->rsa));
++		buffer_put_bignum2(b, RSA_get0_iqmp(key->rsa));
++		buffer_put_bignum2(b, RSA_get0_p(key->rsa));
++		buffer_put_bignum2(b, RSA_get0_q(key->rsa));
+ 		break;
+ 	case KEY_DSA:
+-		buffer_put_bignum2(b, key->dsa->p);
+-		buffer_put_bignum2(b, key->dsa->q);
+-		buffer_put_bignum2(b, key->dsa->g);
+-		buffer_put_bignum2(b, key->dsa->pub_key);
+-		buffer_put_bignum2(b, key->dsa->priv_key);
++		buffer_put_bignum2(b, DSA_get0_p(key->dsa));
++		buffer_put_bignum2(b, DSA_get0_q(key->dsa));
++		buffer_put_bignum2(b, DSA_get0_g(key->dsa));
++		buffer_put_bignum2(b, DSA_get0_pub_key(key->dsa));
++		buffer_put_bignum2(b, DSA_get0_priv_key(key->dsa));
+ 		break;
+ 	}
+ 	buffer_put_cstring(b, comment);
+@@ -568,9 +568,9 @@
+ 
+ 	if (key->type == KEY_RSA1) {
+ 		buffer_put_char(&msg, SSH_AGENTC_REMOVE_RSA_IDENTITY);
+-		buffer_put_int(&msg, BN_num_bits(key->rsa->n));
+-		buffer_put_bignum(&msg, key->rsa->e);
+-		buffer_put_bignum(&msg, key->rsa->n);
++		buffer_put_int(&msg, BN_num_bits(RSA_get0_n(key->rsa)));
++		buffer_put_bignum(&msg, RSA_get0_e(key->rsa));
++		buffer_put_bignum(&msg, RSA_get0_n(key->rsa));
+ 	} else if (key->type == KEY_DSA || key->type == KEY_RSA) {
+ 		key_to_blob(key, &blob, &blen);
+ 		buffer_put_char(&msg, SSH2_AGENTC_REMOVE_IDENTITY);
+Only in nx-3.5.0-openssl111/nxssh: authfd.c~
+Only in nx-3.5.0-openssl111/nxssh: authfd.o
+diff -ur nx-3.5.0/nxssh/authfile.c nx-3.5.0-openssl111/nxssh/authfile.c
+--- nx-3.5.0/nxssh/authfile.c	2007-09-11 22:25:51.000000000 +0200
++++ nx-3.5.0-openssl111/nxssh/authfile.c	2018-10-21 15:10:00.666003610 +0200
+@@ -130,10 +130,10 @@
+ 	 * will be stored in plain text, and storing them also in encrypted
+ 	 * format would just give known plaintext).
+ 	 */
+-	buffer_put_bignum(&buffer, key->rsa->d);
+-	buffer_put_bignum(&buffer, key->rsa->iqmp);
+-	buffer_put_bignum(&buffer, key->rsa->q);	/* reverse from SSL p */
+-	buffer_put_bignum(&buffer, key->rsa->p);	/* reverse from SSL q */
++	buffer_put_bignum(&buffer, RSA_get0_d(key->rsa));
++	buffer_put_bignum(&buffer, RSA_get0_iqmp(key->rsa));
++	buffer_put_bignum(&buffer, RSA_get0_q(key->rsa));	/* reverse from SSL p */
++	buffer_put_bignum(&buffer, RSA_get0_p(key->rsa));	/* reverse from SSL q */
+ 
+ 	/* Pad the part to be encrypted until its size is a multiple of 8. */
+ 	while (buffer_len(&buffer) % 8 != 0)
+@@ -152,9 +152,9 @@
+ 	buffer_put_int(&encrypted, 0);	/* For future extension */
+ 
+ 	/* Store public key.  This will be in plain text. */
+-	buffer_put_int(&encrypted, BN_num_bits(key->rsa->n));
+-	buffer_put_bignum(&encrypted, key->rsa->n);
+-	buffer_put_bignum(&encrypted, key->rsa->e);
++	buffer_put_int(&encrypted, BN_num_bits(RSA_get0_n(key->rsa)));
++	buffer_put_bignum(&encrypted, RSA_get0_n(key->rsa));
++	buffer_put_bignum(&encrypted, RSA_get0_e(key->rsa));
+ 	buffer_put_cstring(&encrypted, comment);
+ 
+ 	/* Allocate space for the private part of the key in the buffer. */
+@@ -311,8 +311,8 @@
+ 	/* Read the public key from the buffer. */
+ 	(void) buffer_get_int(&buffer);
+ 	pub = key_new(KEY_RSA1);
+-	buffer_get_bignum(&buffer, pub->rsa->n);
+-	buffer_get_bignum(&buffer, pub->rsa->e);
++	buffer_get_bignum(&buffer, RSA_get0_n(pub->rsa));
++	buffer_get_bignum(&buffer, RSA_get0_e(pub->rsa));
+ 	if (commentp)
+ 		*commentp = buffer_get_string(&buffer, NULL);
+ 	/* The encrypted private part is not parsed by this function. */
+@@ -411,8 +411,8 @@
+ 	(void) buffer_get_int(&buffer);
+ 	prv = key_new_private(KEY_RSA1);
+ 
+-	buffer_get_bignum(&buffer, prv->rsa->n);
+-	buffer_get_bignum(&buffer, prv->rsa->e);
++	buffer_get_bignum(&buffer, RSA_get0_n(prv->rsa));
++	buffer_get_bignum(&buffer, RSA_get0_e(prv->rsa));
+ 	if (commentp)
+ 		*commentp = buffer_get_string(&buffer, NULL);
+ 	else
+@@ -451,11 +451,11 @@
+ 		goto fail;
+ 	}
+ 	/* Read the rest of the private key. */
+-	buffer_get_bignum(&decrypted, prv->rsa->d);
+-	buffer_get_bignum(&decrypted, prv->rsa->iqmp);		/* u */
++	buffer_get_bignum(&decrypted, RSA_get0_d(prv->rsa));
++	buffer_get_bignum(&decrypted, RSA_get0_iqmp(prv->rsa));		/* u */
+ 	/* in SSL and SSH v1 p and q are exchanged */
+-	buffer_get_bignum(&decrypted, prv->rsa->q);		/* p */
+-	buffer_get_bignum(&decrypted, prv->rsa->p);		/* q */
++	buffer_get_bignum(&decrypted, RSA_get0_q(prv->rsa));		/* p */
++	buffer_get_bignum(&decrypted, RSA_get0_p(prv->rsa));		/* q */
+ 
+ 	/* calculate p-1 and q-1 */
+ 	rsa_generate_additional_parameters(prv->rsa);
+@@ -497,7 +497,7 @@
+ 	if (pk == NULL) {
+ 		debug("PEM_read_PrivateKey failed");
+ 		(void)ERR_get_error();
+-	} else if (pk->type == EVP_PKEY_RSA &&
++	} else if (EVP_PKEY_get0_RSA(pk) != NULL &&
+ 	    (type == KEY_UNSPEC||type==KEY_RSA)) {
+ 		prv = key_new(KEY_UNSPEC);
+ 		prv->rsa = EVP_PKEY_get1_RSA(pk);
+@@ -511,7 +511,7 @@
+ 			key_free(prv);
+ 			prv = NULL;
+ 		}
+-	} else if (pk->type == EVP_PKEY_DSA &&
++	} else if (EVP_PKEY_get0_DSA(pk) != NULL &&
+ 	    (type == KEY_UNSPEC||type==KEY_DSA)) {
+ 		prv = key_new(KEY_UNSPEC);
+ 		prv->dsa = EVP_PKEY_get1_DSA(pk);
+@@ -522,7 +522,7 @@
+ #endif
+ 	} else {
+ 		error("PEM_read_PrivateKey: mismatch or "
+-		    "unknown EVP_PKEY save_type %d", pk->save_type);
++		    "unknown EVP_PKEY");
+ 	}
+ 	fclose(fp);
+ 	if (pk != NULL)
+diff -ur nx-3.5.0/nxssh/bufbn.c nx-3.5.0-openssl111/nxssh/bufbn.c
+--- nx-3.5.0/nxssh/bufbn.c	2007-06-05 10:29:35.000000000 +0200
++++ nx-3.5.0-openssl111/nxssh/bufbn.c	2018-10-21 15:11:17.453712540 +0200
+@@ -151,7 +151,7 @@
+ 		buffer_put_int(buffer, 0);
+ 		return 0;
+ 	}
+-	if (value->neg) {
++	if (BN_is_negative(value)) {
+ 		error("buffer_put_bignum2_ret: negative numbers not supported");
+ 		return (-1);
+ 	}
