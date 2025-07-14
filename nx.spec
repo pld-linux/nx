@@ -90,12 +90,12 @@ zdalnych sesjach X11 nawet przy prędkosci 56k albo większej.
 
 %prep
 %setup -q -c -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8
-%patch0 -p1
-%patch1 -p1
-%patch2 -p0
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p0
+%patch -P3 -p1
+%patch -P4 -p1
+%patch -P5 -p1
 
 cat <<EOF >>nx-X11/config/cf/host.def
 #define UseRpath YES
